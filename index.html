@@ -46,106 +46,28 @@
     <!-- Header -->
     <header>
         <div class="logo">GoalNewsDE</div>
-    </header>
+    <header class="navbar">
+    <div class="logo">GoalNewsDE</div>
 
-    <!-- Hero & Matches -->
-    <div class="hero-container"></div>
-    <nav class="navbar">
-        <input type="checkbox" id="menu-toggle" class="menu-toggle">
-        <label for="menu-toggle" class="hamburger-icon">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </label>
-        <ul class="nav-menu">
-            <li><a href="football.html">Am. Football</a></li>
-            <li><a href="votings.html">Abstimmiungen</a></li>
-            <li><a href="login.html">Login/Registrieren</a></li>
-            <li><a href="Fussball Spiel.html">Minispiel</a></li>
-            <li><a href="bundesliga.html">Bundesliga</a></li>
-            <li><a href="2liga.html">Bundesliag</a></li>
-            <li><a href="comments.html">Kommentar Forum</a></li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="lastgameday.html">Letzter Spieltag</a></li>
-        </ul>
-    </nav>
-<style>
-    .navbar {
-    background-color: #333;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-}
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="hamburger-icon">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </label>
 
-.menu-toggle {
-    display: none; /* Checkbox verstecken */
-}
-
-.hamburger-icon {
-    display: block;
-    cursor: pointer;
-    width: 30px;
-    height: 22px;
-    position: relative;
-    z-index: 100; /* Sorgt dafür, dass es über dem Menü liegt */
-}
-
-.bar {
-    background-color: white;
-    width: 100%;
-    height: 3px;
-    margin: 4px 0;
-    transition: all 0.3s ease-in-out;
-}
-
-.nav-menu {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: -100%; /* Startet außerhalb des Bildschirms */
-    width: 80%; /* Breite des Menüs */
-    height: 100%;
-    background-color: #444;
-    padding-top: 50px;
-    transition: right 0.3s ease-in-out;
-}
-
-.nav-menu li {
-    text-align: center;
-    margin: 10px 0;
-}
-
-.nav-menu a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2em;
-    padding: 10px;
-    display: block;
-}
-
-/* Animation: Wenn die Checkbox aktiviert ist */
-#menu-toggle:checked ~ .nav-menu {
-    right: 0; /* Menü wird angezeigt */
-}
-
-#menu-toggle:checked ~ .hamburger-icon .bar:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-}
-
-#menu-toggle:checked ~ .hamburger-icon .bar:nth-child(2) {
-    opacity: 0;
-}
-
-#menu-toggle:checked ~ .hamburger-icon .bar:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-}
-
-</style>
-
-
+    <ul class="nav-menu">
+        <li><a href="football.html">Am. Football</a></li>
+        <li><a href="votings.html">Abstimmungen</a></li>
+        <li><a href="login.html">Login/Registrieren</a></li>
+        <li><a href="Fussball Spiel.html">Minispiel</a></li>
+        <li><a href="bundesliga.html">Bundesliga</a></li>
+        <li><a href="2liga.html">Bundesliag</a></li>
+        <li><a href="comments.html">Kommentar Forum</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="lastgameday.html">Letzter Spieltag</a></li>
+    </ul>
+</header>
 
 </div>
     <div class="socials">
