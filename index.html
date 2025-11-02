@@ -133,7 +133,7 @@
             countdownEl.textContent = `${d}d ${h}h ${m}m ${s}s`;
         }, 1000);
 
-        // === Erweiterte Suchfunktion (scrapt Unterseiten) ===
+        // === Erweiterte Suchfunktion ===
         const pagesToSearch = [
             "news.html",
             "bundesliga.html",
@@ -144,7 +144,6 @@
             "comments.html",
             "football.html",
             "login.html",
-
         ];
 
         const siteSearch = document.getElementById("siteSearch");
@@ -249,6 +248,34 @@
                 }
             });
         });
+    </script>
+
+    <!-- 🟢 Google Sheets Live-Ticker -->
+    <script>
+        const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQnDeinLinkHier/pub?gid=0&single=true&output=csv";
+        const ticker = document.getElementById("ticker");
+
+        async function loadTicker() {
+            try {
+                const res = await fetch(sheetURL);
+                const text = await res.text();
+                const rows = text.split("\n").map(r => r.trim()).filter(r => r);
+                let i = 0;
+
+                function update() {
+                    ticker.textContent = rows[i];
+                    i = (i + 1) % rows.length;
+                }
+
+                update();
+                setInterval(update, 5000);
+            } catch (e) {
+                ticker.textContent = "⚠️ Fehler beim Laden der Ticker-Daten";
+                console.error(e);
+            }
+        }
+
+        loadTicker();
     </script>
 
     <script async defer src="https://apis.google.com/js/api.js"></script>
