@@ -1,304 +1,82 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoalNewsDE - Fußball-News & Tabellen</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="https://i.ibb.co/21R6p75W/Logo-1.jpg" type="image/jpeg">
-
-    <link rel="stylesheet" href="style.css">
-
-    <!-- PWA / App -->
-    <meta name="theme-color" content="#1db954">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/21R6p75W/Logo-1.jpg">
-    <link rel="manifest" href="manifest.json">
+    <title>GoalNewsDE Live Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #1db954;
+        }
+        .live-matches {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        .live-matches p {
+            margin: 10px 0;
+            padding: 10px;
+            background: #2c2c2c;
+            border-radius: 5px;
+        }
+        em {
+            color: #ccc;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
-
 <body>
-    <div id="breakingNews">
-        <div class="news-wrapper">
-            <span class="news-item">Am. Football: Am 9.11.2025: Berlin-Game Indianapolis Colts - Atlanta Falcons</span>
-            <span class="news-item">Comeback von Alphonso Davies: "Er ist schon wieder mit Ball beim Training"!</span>
-            <span class="news-item">Der Spielplan des Borussia Dortmund im November ist vollgepackt – gleich sechs Pflichtspiele in Bundesliga und Champions League stehen an.</span>
-            <span class="news-item">Borussia Dortmund besiegt FC Augsburg 1:0 dank Treffer von Serhou Guirassy – ein Statement vorm Kracher gegen Man City.</span>
-            <span class="news-item">Erstes Gegentor nach 25 Sekunden: Union-Frauen kassieren gegen Bremen vierte Saisonniederlage!</span>
-            <span class="news-item">Sky-Experte Didi Hamann über Wagner: "Jetzt auf ihn loszugehen, halte ich nicht für richtig"</span>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header class="navbar">
-        <div class="logo">GoalNewsDE</div>
-
-        <input type="checkbox" id="menu-toggle" class="menu-toggle">
-        <label for="menu-toggle" class="hamburger-icon">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </label>
-
-        <ul class="nav-menu">
-            <li><a href="football.html">Am. Football</a></li>
-            <li><a href="votings.html">Abstimmungen</a></li>
-            <li><a href="login.html">Login/Registrieren</a></li>
-            <li><a href="bundesliga.html">Bundesliga</a></li>
-            <li><a href="2liga.html">2. Bundesliaga</a></li>
-            <li><a href="comments.html">Kommentar Forum</a></li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="lastgameday.html">Letzter Spieltag</a></li>
-        </ul>
-    </header>
-
-    <div class="socials">
-        <a href="https://whatsapp.com/channel/0029Vb7PDwN8V0toB3ATWZ1Y" target="_blank">WhatsApp</a>
-        <a href="https://youtube.com/" target="_blank">YouTube</a>
-    </div>
-
-    <div class="countdown-section">
-        <h2>⏱️ 10. Spieltag startet in:</h2>
-        <div id="countdown">lade...</div>
-    </div>
-
-    <div class="matches">
-        <h2>⚽ Bundesliga - Spieltag 10 (7. - 9. November)</h2>
-        <h4>Freitag:</h4>
-        <h3>Werder Bremen 20:30 VfL Wolfsburg</h3>
-        <h4>Samstag:</h4>
-        <h3>
-            Bayer Leverkusen 15:30 FC Heidenheim<br>
-            Union Berlin 15:30 Bayern München<br>
-            TSG Hoffenheim 15:30 RB Leipzig<br>
-            Hamburger SV 15:30 Bor. Dortmund<br>
-            <strong style="color: gold;">Topspiel: Bor. Mönchengladbach 18:30 1. FC Köln</strong>
-        </h3>
-        <h4>Sonntag:</h4>
-        <h3>
-            SC Freiburg 15:30 St. Pauli<br>
-            VfB Stuttgart 17:30 FC Augsburg<br>
-            Eintracht Frankfurt 19:30 Mainz 05
-        </h3>
-    </div>
-
-    <!-- Live-Ticker -->
-    <div class="ticker-wrapper">
-        <div class="ticker" id="ticker"></div>
-    </div>
-
-    <!-- Live-Spielstände aktueller Spieltag -->
     <div class="live-matches">
         <h2>⚡ Aktueller Bundesliga-Spieltag</h2>
         <div id="matchesList">Lade Live-Daten...</div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        GoalNewsDE © 2025 – Don’t steal our stuff.
-        <a href="mailto:info@goalnewsde.de">Email</a> | <a href="agb.html">Datenschutz</a> | <a href="security.html">Sicherheit</a>
-    </footer>
-
-    <!-- Problem melden -->
-    <div id="reportSection" style="text-align:center; margin:50px 0;">
-        <button id="reportButton" style="
-            background:#1db954;
-            color:white;
-            border:none;
-            padding:12px 20px;
-            border-radius:10px;
-            cursor:pointer;
-            font-size:16px;
-            box-shadow:0 0 10px rgba(0,0,0,0.3);
-        ">⚠️ Problem melden</button>
-
-        <div id="reportForm" style="display:none; margin-top:20px;">
-            <h3>🛠️ Fehler melden</h3>
-            <label for="errorType">Art des Fehlers:</label><br>
-            <select id="errorType" style="padding:8px; margin:8px; border-radius:6px;">
-                <option value="Sicherheitsfehler">Sicherheitsfehler</option>
-                <option value="Anzeigeproblem">Anzeigeproblem</option>
-                <option value="Falsche Information">Falsche Information</option>
-                <option value="Kommentarproblem">Kommentarproblem</option>
-                <option value="Anderes">Anderes</option>
-            </select><br>
-
-            <textarea id="errorDescription" rows="4" placeholder="Beschreibe den Fehler..." style="
-                width:80%;
-                padding:10px;
-                border-radius:8px;
-                border:1px solid #ccc;
-                resize:none;
-            "></textarea><br>
-
-            <button id="sendReport" type="button" style="
-                background:#1db954;
-                color:white;
-                border:none;
-                padding:10px 20px;
-                border-radius:8px;
-                cursor:pointer;
-                margin-top:10px;
-            ">📨 Absenden</button>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="js/config.js"></script>
-    <script src="js/google-sheets-client.js"></script>
-    <script src="js/table-renderer.js"></script>
-    <script src="js/sheets-api.js"></script>
-    <script src="js/auto-refresh.js"></script>
-
     <script>
-        // Dark Mode
-        document.body.classList.add('dark');
+    async function loadMatches() {
+        const matchesList = document.getElementById("matchesList");
+        matchesList.innerHTML = "Lade Live-Daten...";
 
-        // Countdown
-        const matchDate = new Date("November 7, 2025 20:30:00").getTime();
-        const countdownEl = document.getElementById("countdown");
+        try {
+            // 1️⃣ Aktuellen Spieltag holen
+            const resGroup = await fetch("https://api.openligadb.de/getcurrentgroup/bl1/2025");
+            const groupData = await resGroup.json();
+            const currentMatchday = groupData.GroupOrderID;
 
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = matchDate - now;
+            // 2️⃣ Spiele vom aktuellen Spieltag holen
+            const resMatches = await fetch(`https://api.openligadb.de/getmatchdata/bl1/2025/${currentMatchday}`);
+            const matches = await resMatches.json();
 
-            if (diff < 0) {
-                countdownEl.textContent = "Anpfiff!";
-                return;
-            }
+            matchesList.innerHTML = "";
+            matches.forEach(match => {
+                const home = match.Team1.TeamName;
+                const away = match.Team2.TeamName;
+                const scoreHome = match.MatchResults[0]?.PointsTeam1 ?? "-";
+                const scoreAway = match.MatchResults[0]?.PointsTeam2 ?? "-";
+                const date = new Date(match.MatchDateTimeUTC).toLocaleString("de-DE");
 
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-            countdownEl.textContent = `${d}d ${h}h ${m}m ${s}s`;
-        }, 1000);
-
-        // Live-Ticker
-        document.addEventListener("DOMContentLoaded", async () => {
-            const ticker = document.getElementById("ticker");
-            const api = SheetsAPI.getInstance();
-            const autoRefresh = AutoRefresh.getInstance();
-
-            async function updateTicker() {
-                try {
-                    const data = await api.fetchTicker();
-                    const flatData = data.flat();
-                    ticker.textContent = flatData.join(' • ');
-
-                    const textWidth = ticker.offsetWidth;
-                    const wrapperWidth = ticker.parentElement.offsetWidth;
-                    const duration = (textWidth + wrapperWidth) * 9;
-                    ticker.style.animation = `scrollTicker ${duration}ms linear infinite`;
-                } catch (e) {
-                    console.error("Ticker Fehler:", e);
-                }
-            }
-            autoRefresh.start(updateTicker, 5000, "Ticker");
-        });
-
-        // Live-Spiele OpenLigaDB
-        async function getCurrentMatchday() {
-            try {
-                const res = await fetch("https://api.openligadb.de/getcurrentgroup/bl1/2025");
-                const data = await res.json();
-                return data.GroupOrderID;
-            } catch (err) {
-                console.error("Fehler beim Laden des aktuellen Spieltags:", err);
-                return null;
-            }
-        }
-
-        async function loadCurrentMatches() {
-            const currentMatchday = await getCurrentMatchday();
-            if (!currentMatchday) return;
-
-            const apiUrl = `https://api.openligadb.de/getmatchdata/bl1/2025/${currentMatchday}`;
-
-            try {
-                const response = await fetch(apiUrl);
-                const matches = await response.json();
-                const listDiv = document.getElementById("matchesList");
-                listDiv.innerHTML = "";
-
-                if (!matches || matches.length === 0) {
-                    listDiv.innerHTML = "<p>Keine Spiele verfügbar.</p>";
-                    return;
-                }
-
-                matches.forEach(match => {
-                    const home = match.Team1.TeamName;
-                    const away = match.Team2.TeamName;
-                    const scoreHome = match.MatchResults[0]?.PointsTeam1 ?? "-";
-                    const scoreAway = match.MatchResults[0]?.PointsTeam2 ?? "-";
-                    const date = new Date(match.MatchDateTimeUTC).toLocaleString("de-DE");
-
-                    const p = document.createElement("p");
-                    p.innerHTML = `<strong>${home} ${scoreHome} - ${scoreAway} ${away}</strong> <em>(${date})</em>`;
-                    listDiv.appendChild(p);
-                });
-
-            } catch (err) {
-                console.error("Fehler beim Laden der Spiele:", err);
-                document.getElementById("matchesList").innerHTML = "<p>Fehler beim Laden der Spiele.</p>";
-            }
-        }
-
-        loadCurrentMatches();
-        setInterval(loadCurrentMatches, 300000); // alle 5 Minuten
-    </script>
-
-    <!-- Firebase Problem melden -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBmIcdFtxv4jBJKdiAkEiwnkQ8yRwiG_0w",
-            authDomain: "goalnewsde-community.firebaseapp.com",
-            projectId: "goalnewsde-community",
-            storageBucket: "goalnewsde-community.firebasestorage.app",
-            messagingSenderId: "134523022055",
-            appId: "1:134523022055:web:4f35ed7812d06e4fb55042"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const reportButton = document.getElementById("reportButton");
-            const reportForm = document.getElementById("reportForm");
-            const sendReport = document.getElementById("sendReport");
-            const errorType = document.getElementById("errorType");
-            const errorDescription = document.getElementById("errorDescription");
-
-            reportButton.addEventListener("click", () => {
-                reportForm.style.display = reportForm.style.display === "none" ? "block" : "none";
+                const p = document.createElement("p");
+                p.innerHTML = `<strong>${home} ${scoreHome} - ${scoreAway} ${away}</strong> <em>(${date})</em>`;
+                matchesList.appendChild(p);
             });
 
-            sendReport.addEventListener("click", async () => {
-                const type = errorType.value;
-                const description = errorDescription.value.trim();
-                if (!description) return alert("Bitte eine Beschreibung eingeben!");
+        } catch (err) {
+            console.error("Fehler beim Laden der Spiele:", err);
+            matchesList.innerHTML = "<p>Fehler beim Laden der Spiele. Bitte später erneut versuchen.</p>";
+        }
+    }
 
-                try {
-                    await addDoc(collection(db, "reports"), {
-                        type,
-                        description,
-                        created: serverTimestamp()
-                    });
-                    alert("✅ Vielen Dank! Dein Bericht wurde anonym gesendet.");
-                    errorDescription.value = "";
-                    reportForm.style.display = "none";
-                } catch (e) {
-                    console.error("Fehler beim Senden:", e);
-                    alert("❌ Fehler beim Senden. Bitte später erneut versuchen.");
-                }
-            });
-        });
+    // Direkt laden + alle 5 Minuten aktualisieren
+    loadMatches();
+    setInterval(loadMatches, 5);
     </script>
-
-    <script async defer src="https://apis.google.com/js/api.js"></script>
 </body>
-
 </html>
