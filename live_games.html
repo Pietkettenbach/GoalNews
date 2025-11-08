@@ -8,13 +8,33 @@
 body { font-family: 'Poppins', sans-serif; background:#0f0f0f; color:#eee; text-align:center; }
 h2 { margin:20px 0; }
 .matches-table { width:90%; max-width:800px; margin:20px auto; border-collapse: collapse; }
-.matches-table th, .matches-table td { border:1px solid #444; padding:10px; text-align:center; transition: all 0.5s ease; }
+.matches-table th, .matches-table td { border:1px solid #444; padding:10px; text-align:center; transition: all 0.5s ease; position: relative; }
 .matches-table th { background:#1db954; color:#000; }
 .goal-animation { background: #00ff00; color:#000; font-weight:bold; transform: scale(1.2); animation: pop 0.5s forwards; }
 .over-game { text-decoration: line-through; opacity: 0.6; transition: all 0.5s ease; }
 @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1.2); } }
 #nextGameCountdown { font-size: 1.5rem; margin: 15px 0; color:#1db954; }
 footer { margin-top:30px; padding:15px; background:#111; color:#eee; }
+
+/* ---- Halbzeit Animation im Score-Feld ---- */
+.half-time-animation {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(29,185,84,0.9);
+    color: #000;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    pointer-events: none;
+    animation: halftimePulse 1.5s infinite alternate;
+}
+@keyframes halftimePulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.9; }
+}
 </style>
 </head>
 <body>
@@ -77,6 +97,16 @@ function updateCountdown(nextGameTime) {
     countdownEl.textContent = `Nächstes Spiel in ${minutes}m ${seconds}s ${milliseconds}ms`;
 }
 
+// --- Overlay direkt im Spiel-Feld ---
+function addHalfTimeAnimation(tdElement){
+    if(!tdElement.querySelector('.half-time-animation')){
+        const overlay = document.createElement("div");
+        overlay.className = "half-time-animation";
+        overlay.textContent = "Halbzeit!";
+        tdElement.appendChild(overlay);
+    }
+}
+
 // --- Live-Spiele anzeigen ---
 async function initLiveGames() {
     const collectionName = "liveGames";
@@ -84,7 +114,6 @@ async function initLiveGames() {
 
     const colRef = collection(db, collectionName);
 
-    // --- Live-Spiele Snapshot ---
     onSnapshot(colRef, async (snapshot) => {
         tableBody.innerHTML = "";
         if(snapshot.empty){
@@ -100,8 +129,8 @@ async function initLiveGames() {
             const score = data.score || "";
             const goal = data.goal || false;
             const over = data.over || false;
+            const halfTime = data.halfTime || false;
 
-            // Skip next_game für die Tabelle
             if(doc.id === "next_game") return;
 
             const tr = document.createElement("tr");
@@ -111,15 +140,19 @@ async function initLiveGames() {
                 <td class="${goal ? 'goal-animation' : ''} ${over ? 'over-game' : ''}">${score}</td>
             `;
             tableBody.appendChild(tr);
+
+            if(halfTime){
+                const scoreTd = tr.querySelector('td:nth-child(3)');
+                addHalfTimeAnimation(scoreTd);
+            }
         });
 
-        // --- Countdown für next_game ---
         const nextGameDoc = doc(db, collectionName, "next_game");
         const nextSnap = await getDoc(nextGameDoc);
         if(nextSnap.exists()){
             const data = nextSnap.data();
             if(data.nextGameTime){
-                const nextGameTime = data.nextGameTime.toDate().getTime(); // Firestore Timestamp -> JS Date
+                const nextGameTime = data.nextGameTime.toDate().getTime();
                 clearInterval(window.nextGameInterval);
                 updateCountdown(nextGameTime);
                 window.nextGameInterval = setInterval(() => updateCountdown(nextGameTime), 50);
