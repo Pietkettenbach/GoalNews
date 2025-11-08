@@ -4,99 +4,85 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GoalNews - Live Spiele</title>
-<link rel="icon" href="https://i.ibb.co/21R6p75W/Logo-1.jpg" type="image/jpeg">
-
 <style>
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #0f0f0f;
-    color: #eee;
-    margin:0;
-    padding:0;
-    text-align:center;
-}
-
+body { font-family: 'Poppins', sans-serif; background:#0f0f0f; color:#eee; text-align:center; }
 h2 { margin:20px 0; }
-
-.matches-table {
-    width:90%;
-    max-width:800px;
-    margin:20px auto;
-    border-collapse: collapse;
-}
-.matches-table th, .matches-table td {
-    border:1px solid #444;
-    padding:10px;
-    text-align:center;
-}
+.matches-table { width:90%; max-width:800px; margin:20px auto; border-collapse: collapse; }
+.matches-table th, .matches-table td { border:1px solid #444; padding:10px; text-align:center; transition: all 0.5s ease; }
 .matches-table th { background:#1db954; color:#000; }
-
-footer {
-    margin-top:30px;
-    padding:15px;
-    background:#111;
-    color:#eee;
-}
+.goal-animation { background: #00ff00; color:#000; font-weight:bold; transform: scale(1.2); animation: pop 0.5s forwards; }
+@keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1.2); } }
+footer { margin-top:30px; padding:15px; background:#111; color:#eee; }
 </style>
 </head>
 <body>
 
 <h2>⚽ Live Spiele</h2>
 <table class="matches-table">
-    <thead>
-        <tr>
-            <th>Heimteam</th>
-            <th>Gastteam</th>
-            <th>Ergebnis</th>
-        </tr>
-    </thead>
-    <tbody id="tableBody">
-        <tr><td colspan="3">Lade Spiele...</td></tr>
-    </tbody>
+<thead>
+<tr><th>Heimteam</th><th>Gastteam</th><th>Ergebnis</th></tr>
+</thead>
+<tbody id="tableBody">
+<tr><td colspan="3">Lade Spiele...</td></tr>
+</tbody>
 </table>
 
-<footer>
-GoalNews © 2025
-</footer>
+<footer>GoalNews © 2025</footer>
 
-<script src="js/config.js"></script>
-<script src="js/google-sheets-client.js"></script>
-<script src="js/sheets-api.js"></script>
-<script src="js/auto-refresh.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getFirestore, collection, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-    const tableBody = document.getElementById("tableBody");
-    const api = SheetsAPI.getInstance();
-    const autoRefresh = AutoRefresh.getInstance();
+// --- Firebase Config ---
+const firebaseConfig = {
+    apiKey: "AIzaSyBmIcdFtxv4jBJKdiAkEiwnkQ8yRwiG_0w",
+    authDomain: "goalnewsde-community.firebaseapp.com",
+    projectId: "goalnewsde-community",
+    storageBucket: "goalnewsde-community.firebasestorage.app",
+    messagingSenderId: "134523022055",
+    appId: "1:134523022055:web:4f35ed7812d06e4fb55042"
+};
 
-    async function updateGames() {
-        try {
-            const data = await api.fetchTicker(); // Alle Zeilen aus dem Sheet
-            tableBody.innerHTML = "";
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-            data.forEach(row => {
-                // Spalten: B=1, C=2, D=3
-                if(row[1] && row[2] && row[3]){
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `<td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td>`;
-                    tableBody.appendChild(tr);
-                }
-            });
+const tableBody = document.getElementById("tableBody");
 
-            if(tableBody.innerHTML === ""){
-                tableBody.innerHTML = "<tr><td colspan='3'>Keine aktuellen Spiele</td></tr>";
-            }
-        } catch(e){
-            console.error("Fehler beim Laden der Spiele:", e);
-            tableBody.innerHTML = "<tr><td colspan='3'>Fehler beim Laden der Spiele</td></tr>";
+// --- Funktion um Sammlung automatisch anzulegen ---
+async function ensureCollectionExists(collectionName) {
+    const docRef = doc(db, collectionName, "initDoc");
+    await setDoc(docRef, { init: true }); // Erstellt ein Dummy-Dokument, falls die Sammlung leer ist
+}
+
+// --- Live-Spiele anzeigen ---
+async function initLiveGames() {
+    const collectionName = "liveGames";
+    await ensureCollectionExists(collectionName);
+
+    const colRef = collection(db, collectionName);
+
+    onSnapshot(colRef, (snapshot) => {
+        tableBody.innerHTML = "";
+        if(snapshot.empty){
+            tableBody.innerHTML = "<tr><td colspan='3'>Keine aktuellen Spiele</td></tr>";
+            return;
         }
-    }
 
-    // Spiele alle 10 Sekunden aktualisieren
-    autoRefresh.start(updateGames, 10000, "LiveGames");
-});
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const home = data.home || "";
+            const away = data.away || "";
+            const score = data.score || "";
+            const goal = data.goal || false;
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${home}</td><td>${away}</td><td class="${goal ? 'goal-animation' : ''}">${score}</td>`;
+            tableBody.appendChild(tr);
+        });
+    });
+}
+
+initLiveGames();
 </script>
-
 </body>
 </html>
