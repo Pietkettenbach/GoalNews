@@ -1,161 +1,189 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3D Penalty Mini-Game</title>
-<style>
-body { margin:0; overflow:hidden; font-family:Arial; background:#121212; }
-#score { position:absolute; top:10px; left:50%; transform:translateX(-50%); color:#1db954; font-size:24px; z-index:10; display:none;}
-#startScreen {
-    position:absolute; top:0; left:0; width:100%; height:100%;
-    display:flex; justify-content:center; align-items:center; flex-direction:column;
-    background: rgba(0,0,0,0.9); z-index:10;
-}
-#startScreen button {
-    padding:20px 40px; font-size:24px; border:none; border-radius:15px;
-    background:#1db954; color:#fff; cursor:pointer;
-}
-#instructions { position:absolute; bottom:10px; left:50%; transform:translateX(-50%); color:#fff; font-size:16px; text-align:center; z-index:10; display:none;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoalNews - Fußball & American Football News</title>
+    <meta name="description" content="GoalNews – Die aktuellsten Fußball- und American Football-News aus Deutschland und der Welt.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://i.ibb.co/21R6p75W/Logo-1.jpg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/21R6p75W/Logo-1.jpg">
+
+    <!-- Manifest & Theme -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1db954">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google API -->
+    <script async defer src="https://apis.google.com/js/api.js"></script>
 </head>
-<body>
+<body class="dark">
 
-<div id="score">Score: 0</div>
-<div id="instructions">Swipe nach oben/rechts/links, um zu schießen!</div>
-<div id="startScreen">
-    <h1 style="color:#1db954;">⚽ 3D Penalty Game</h1>
-    <button id="startBtn">Spiel Starten</button>
-</div>
+    <!-- Header + Navigation -->
+    <header class="navbar">
+        <div class="logo">GoalNews</div>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="hamburger-icon" aria-label="Navigation öffnen">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </label>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="live_games.html">Live Spiele</a></li>
+                <li><a href="football.html">American Football</a></li>
+                <li><a href="votings.html">Abstimmungen</a></li>
+                <li><a href="login.html">Login/Registrieren</a></li>
+                <li><a href="bundesliga.html">Bundesliga</a></li>
+                <li><a href="2liga.html">2. Bundesliga</a></li>
+                <li><a href="comments.html">Kommentar Forum</a></li>
+                <li><a href="lastgameday.html">Letzter Spieltag</a></li>
+                <li><a href="best player of the day.html">Spieler der Woche</a></li>
+                <li><a href="feedback.html">Helfen Sie Uns!</a></li>
+                <li><a href="https://whatsapp.com/channel/0029Vb7PDwN8V0toB3ATWZ1Y">WhatsApp</a></li>
+                <li><a href="https://www.youtube.com/@Goalnewsde">YouTube</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.0/gsap.min.js"></script>
+    <!-- Breaking News -->
+    <section id="breakingNews" class="news-ticker">
+        <div class="news-wrapper">
+            <span class="news-item">Deutschland nominiert Kader für November-Länderspiele, Leroy Sané zurück</span>
+            <span class="news-item">Thomas Tuchel offen für England-Verlängerung über WM 2026 hinaus</span>
+            <span class="news-item">Aston Villa vs. Maccabi Tel Aviv: 10 Festnahmen wegen Ausschreitungen</span>
+            <span class="news-item">NFL spielt erstes Saisonspiel in Berlin Colts vs. Falcons</span>
+            <span class="news-item">Green Bay Packers erhalten Marketingrechte für Deutschland, Irland & UK</span>
+        </div>
+    </section>
 
-<script>
-let scene, camera, renderer;
-let floor, goal, ball, keeper;
-let score = 0;
-let scoreEl = document.getElementById("score");
-let instructions = document.getElementById("instructions");
+    <!-- Countdown -->
+    <section class="countdown-section">
+        <h2>⏱️ 1. Sonntagsspiel startet in:</h2>
+        <div id="countdown">lade...</div>
+    </section>
 
-// Start Button
-document.getElementById("startBtn").addEventListener("click", () => {
-    document.getElementById("startScreen").style.display = "none";
-    scoreEl.style.display = "block";
-    instructions.style.display = "block";
-    initGame();
-});
+    <!-- Matches -->
+    <section class="matches">
+        <h2>⚽ Bundesliga - Spieltag 10 (7. - 9. November)</h2>
+        <article>
+            <h3>Freitag</h3>
+            <p>Werder Bremen 2:1 VfL Wolfsburg</p>
+        </article>
+        <article>
+            <h3>Samstag</h3>
+            <p>Bayer Leverkusen 6:0 FC Heidenheim<br>
+               Union Berlin 2:2 Bayern München<br>
+               TSG Hoffenheim 3:1 RB Leipzig<br>
+               Hamburger SV 1:1 Bor. Dortmund<br>
+               <strong style="color: gold;">Topspiel: Bor. Mönchengladbach 3:1 1. FC Köln</strong>
+            </p>
+        </article>
+        <article>
+            <h3>Sonntag</h3>
+            <p>SC Freiburg 15:30 St. Pauli<br>
+               VfB Stuttgart 17:30 FC Augsburg<br>
+               Eintracht Frankfurt 19:30 Mainz 05
+            </p>
+        </article>
+    </section>
 
-function initGame(){
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 1000);
-    renderer = new THREE.WebGLRenderer({antialias:true});
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    <!-- Live-Ticker -->
+    <section class="ticker-wrapper">
+        <div class="ticker" id="ticker"></div>
+    </section>
 
-    // Licht
-    let light = new THREE.DirectionalLight(0xffffff,1);
-    light.position.set(5,10,5);
-    scene.add(light);
-    scene.add(new THREE.AmbientLight(0x404040));
+    <!-- Report Problem -->
+    <section id="reportSection" class="report-section">
+        <button id="reportButton" class="report-btn">⚠️ Problem melden</button>
+        <div id="reportForm" class="report-form">
+            <h3>🛠️ Fehler melden</h3>
+            <label for="errorType">Art des Fehlers:</label><br>
+            <select id="errorType">
+                <option value="Sicherheitsfehler">Sicherheitsfehler</option>
+                <option value="Anzeigeproblem">Anzeigeproblem</option>
+                <option value="Falsche Information">Falsche Information</option>
+                <option value="Kommentarproblem">Kommentarproblem</option>
+                <option value="Anderes">Anderes</option>
+            </select><br>
+            <textarea id="errorDescription" rows="4" placeholder="Beschreibe den Fehler..."></textarea><br>
+            <button id="sendReport" type="button">📨 Absenden</button>
+        </div>
+    </section>
 
-    // Boden (Rasen)
-    let floorGeometry = new THREE.PlaneGeometry(20, 10);
-    let floorMaterial = new THREE.MeshPhongMaterial({color:0x0a8c33});
-    floor = new THREE.Mesh(floorGeometry, floorMaterial);
-    floor.rotation.x = -Math.PI/2;
-    scene.add(floor);
+    <!-- Footer -->
+    <footer>
+        GoalNews © 2025 – Don’t steal our stuff.
+        <a href="mailto:info@goalnewsde.de">Email</a> | 
+        <a href="agb.html">Datenschutz</a> | 
+        <a href="security.html">Sicherheit</a> | 
+        <a href="Impressum.html">Impressum</a>
+    </footer>
 
-    // Tor
-    let goalGeometry = new THREE.BoxGeometry(6,2.5,0.2);
-    let goalMaterial = new THREE.MeshPhongMaterial({color:0xffffff});
-    goal = new THREE.Mesh(goalGeometry, goalMaterial);
-    goal.position.set(0,1.25,-4);
-    scene.add(goal);
+    <!-- Scripts -->
+    <script src="js/bundle.js" defer></script>
 
-    // Ball
-    let ballGeometry = new THREE.SphereGeometry(0.2,32,32);
-    let ballMaterial = new THREE.MeshPhongMaterial({color:0xff9900});
-    ball = new THREE.Mesh(ballGeometry, ballMaterial);
-    resetBall();
-    scene.add(ball);
+    <!-- Konfetti für Follower -->
+    <div id="follower-text">36 Follower! Danke euch!</div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script defer>
+        const text = document.getElementById("follower-text");
+        text.style.position = "fixed";
+        text.style.top = "50%";
+        text.style.left = "50%";
+        text.style.transform = "translate(-50%, -50%)";
+        text.style.fontSize = "2.8rem";
+        text.style.fontFamily = "'Poppins', sans-serif";
+        text.style.color = "#00b300";
+        text.style.fontWeight = "bold";
+        text.style.textShadow = "0 0 20px #00ff00";
+        text.style.animation = "popIn 2s ease-out";
+        setTimeout(() => text.style.display = "none", 5000);
 
-    // Torwart
-    let keeperGeometry = new THREE.CylinderGeometry(0.3,0.3,1,32);
-    let keeperMaterial = new THREE.MeshPhongMaterial({color:0xff0000});
-    keeper = new THREE.Mesh(keeperGeometry, keeperMaterial);
-    keeper.position.set(0,0.5,-3.9);
-    scene.add(keeper);
+        function shootConfetti() {
+            const duration = 1000;
+            const end = Date.now() + duration;
+            (function frame() {
+                confetti({particleCount:12,startVelocity:70,spread:100,origin:{x:0.2,y:1},gravity:0.9,colors:['#00ff00','#ffffff']});
+                confetti({particleCount:12,startVelocity:70,spread:100,origin:{x:0.8,y:1},gravity:0.9,colors:['#00ff00','#ffffff']});
+                if(Date.now() < end) requestAnimationFrame(frame);
+            })();
+        }
+        shootConfetti();
+    </script>
 
-    camera.position.set(0,3,7);
-    camera.lookAt(0,1,-2);
+    <style>
+        @keyframes popIn {
+            0% { transform: translate(-50%, -60%) scale(0.8); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        .report-btn {
+            background:#1db954;
+            color:white;
+            border:none;
+            padding:12px 20px;
+            border-radius:10px;
+            cursor:pointer;
+            font-size:16px;
+            box-shadow:0 0 10px rgba(0,0,0,0.3);
+        }
+        .report-form {
+            display:none;
+            margin-top:20px;
+        }
+        .report-form textarea, .report-form select {
+            width:80%;
+            padding:10px;
+            border-radius:8px;
+            border:1px solid #ccc;
+            resize:none;
+            margin: 8px 0;
+        }
+    </style>
 
-    // Swipe Steuerung
-    let startX, startY, endX, endY;
-    renderer.domElement.addEventListener("touchstart", e => {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-    });
-
-    renderer.domElement.addEventListener("touchend", e => {
-        endX = e.changedTouches[0].clientX;
-        endY = e.changedTouches[0].clientY;
-        let dx = endX - startX;
-        let dy = startY - endY;
-        let strength = Math.min(Math.sqrt(dx*dx + dy*dy)/100,2);
-        let angleX = dx/200;
-        let angleY = dy/200;
-        shootBall(strength, angleX, angleY);
-    });
-
-    animate();
-}
-
-function resetBall(){
-    ball.position.set(0,0.2,3);
-    keeper.position.set(0,0.5,-3.9);
-}
-
-function shootBall(strength, angleX, angleY){
-    gsap.to(ball.position, {
-        x: angleX*5,
-        y: 0.2 + angleY*2,
-        z: -4,
-        duration:1,
-        ease:"power2.out",
-        onComplete: checkGoal
-    });
-    // Torwart zufällig bewegen
-    let move = (Math.random()-0.5)*4;
-    gsap.to(keeper.position, {x:move, duration:1, ease:"power2.inOut"});
-}
-
-function checkGoal(){
-    let dx = Math.abs(ball.position.x - keeper.position.x);
-    let dz = ball.position.z;
-    if(dx > 0.5 && dz <= -3.8){
-        score++;
-        scoreEl.textContent = "Score: " + score;
-        alert("Tor! Score: " + score);
-    } else {
-        alert("Gehalten! Score: "+score);
-    }
-    resetBall();
-}
-
-function animate(){
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-}
-
-// Responsive
-window.addEventListener("resize", ()=> {
-    if(camera && renderer){
-        camera.aspect = window.innerWidth/window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-});
-</script>
 </body>
 </html>
