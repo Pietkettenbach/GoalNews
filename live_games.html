@@ -16,7 +16,7 @@ h2 { margin:20px 0; }
 #nextGameCountdown { font-size: 1.5rem; margin: 15px 0; color:#1db954; }
 footer { margin-top:30px; padding:15px; background:#111; color:#eee; }
 
-/* ---- Halbzeit Animation im Score-Feld ---- */
+/* Halbzeit Label */
 .half-time-animation {
     position: absolute;
     top: 5px;
@@ -35,18 +35,25 @@ footer { margin-top:30px; padding:15px; background:#111; color:#eee; }
     50% { transform: scale(1.2); opacity: 1; }
     100% { transform: scale(1); opacity: 0.9; }
 }
+
+/* Uhr */
+.match-timer {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #1db954;
+}
 </style>
 </head>
 <body>
 
-<h2> Live Spiele</h2>
-<p>Alle Spiele sind Live und noch im Gange</p>
-<p>Durchgestrichene Spiele sind beendet </p>
-<p id="nextGameCountdown">Lade nächsten Countdown...</p>
+<h2>Live Spiele</h2>
+<p>Alle Spiele sind live und im Gange</p>
+<p>Durchgestrichene Spiele sind beendet</p>
 
 <table class="matches-table">
 <thead>
-<tr><th>Heimteam</th><th>Gastteam</th><th>Ergebnis</th></tr>
+<tr><th>Heimteam</th><th>Gastteam</th><th>Ergebnis / Zeit</th></tr>
 </thead>
 <tbody id="tableBody">
 <tr><td colspan="3">Lade Spiele...</td></tr>
@@ -59,7 +66,6 @@ footer { margin-top:30px; padding:15px; background:#111; color:#eee; }
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getFirestore, collection, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-// --- Firebase Config ---
 const firebaseConfig = {
     apiKey: "AIzaSyBmIcdFtxv4jBJKdiAkEiwnkQ8yRwiG_0w",
     authDomain: "goalnewsde-community.firebaseapp.com",
@@ -71,35 +77,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
 const tableBody = document.getElementById("tableBody");
-const countdownEl = document.getElementById("nextGameCountdown");
 
-// --- Funktion um Sammlung automatisch anzulegen ---
-async function ensureCollectionExists(collectionName) {
-    const docRef = doc(db, collectionName, "initDoc");
-    await setDoc(docRef, { init: true });
-}
+// Map für Spiel-Uhren
+const matchTimers = new Map();
 
-// --- Countdown Update ---
-function updateCountdown(nextGameTime) {
-    const now = new Date().getTime();
-    const diff = nextGameTime - now;
-
-    if(diff <= 0){
-        countdownEl.textContent = "Das nächste Spiel läuft!";
-        return;
-    }
-
-    const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
-    const seconds = Math.floor((diff % (1000*60)) / 1000);
-    const milliseconds = Math.floor(diff % 1000);
-    countdownEl.textContent = `Nächstes Spiel in ${minutes}m ${seconds}s ${milliseconds}ms`;
-}
-
-// --- Overlay direkt im Spiel-Feld ---
-function addHalfTimeAnimation(tdElement){
-    if(!tdElement.querySelector('.half-time-animation')){
+function addHalfTimeAnimation(tdElement) {
+    if (!tdElement.querySelector('.half-time-animation')) {
         const overlay = document.createElement("div");
         overlay.className = "half-time-animation";
         overlay.textContent = "Halbzeit!";
@@ -107,45 +91,76 @@ function addHalfTimeAnimation(tdElement){
     }
 }
 
-// --- Live-Spiele anzeigen ---
-async function initLiveGames() {
-    const collectionName = "liveGames";
-    await ensureCollectionExists(collectionName);
+function removeHalfTimeAnimation(tdElement) {
+    const overlay = tdElement.querySelector('.half-time-animation');
+    if (overlay) overlay.remove();
+}
 
-    const colRef = collection(db, collectionName);
+function formatTime(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+function startMatchTimer(id, td, startTime, halfTime) {
+    // Wenn bereits läuft → abbrechen
+    if (matchTimers.has(id)) clearInterval(matchTimers.get(id));
+
+    let paused = halfTime;
+    let elapsed = 0;
+    const timerEl = document.createElement("span");
+    timerEl.className = "match-timer";
+    td.appendChild(timerEl);
+
+    const interval = setInterval(() => {
+        if (!paused) {
+            elapsed = Date.now() - startTime;
+            if (elapsed < 90 * 60 * 1000) {
+                timerEl.textContent = `⏱️ ${formatTime(elapsed)}`;
+            } else {
+                timerEl.textContent = "🕛 90:00";
+                clearInterval(interval);
+            }
+        } else {
+            timerEl.textContent = "⏸️ Halbzeit";
+        }
+    }, 1000);
+
+    matchTimers.set(id, interval);
+}
+
+async function initLiveGames() {
+    const colRef = collection(db, "liveGames");
 
     onSnapshot(colRef, async (snapshot) => {
         tableBody.innerHTML = "";
-        if(snapshot.empty){
+        if (snapshot.empty) {
             tableBody.innerHTML = "<tr><td colspan='3'>Keine aktuellen Spiele</td></tr>";
-            countdownEl.textContent = "";
             return;
         }
 
         snapshot.forEach(doc => {
             const data = doc.data();
+            if (doc.id === "next_game") return;
+
             const home = data.home || "";
             const away = data.away || "";
             const score = data.score || "";
             const goal = data.goal || false;
             const over = data.over || false;
             const halfTime = data.halfTime || false;
+            const startTime = data.startTime ? data.startTime.toDate().getTime() : null;
             const homeCards = data.homeCards || {};
             const awayCards = data.awayCards || {};
-
-            if(doc.id === "next_game") return;
 
             const tr = document.createElement("tr");
             tr.innerHTML = `
                 <td class="${over ? 'over-game' : ''}">
-                    ${home} 
-                    ${homeCards.yellow ? `🟨${homeCards.yellow}` : ""}
-                    ${homeCards.red ? `🟥${homeCards.red}` : ""}
+                    ${home} ${homeCards.yellow ? `🟨${homeCards.yellow}` : ""} ${homeCards.red ? `🟥${homeCards.red}` : ""}
                 </td>
                 <td class="${over ? 'over-game' : ''}">
-                    ${away} 
-                    ${awayCards.yellow ? `🟨${awayCards.yellow}` : ""}
-                    ${awayCards.red ? `🟥${awayCards.red}` : ""}
+                    ${away} ${awayCards.yellow ? `🟨${awayCards.yellow}` : ""} ${awayCards.red ? `🟥${awayCards.red}` : ""}
                 </td>
                 <td class="${goal ? 'goal-animation' : ''} ${over ? 'over-game' : ''}">
                     ${score}
@@ -153,23 +168,19 @@ async function initLiveGames() {
             `;
             tableBody.appendChild(tr);
 
-            if(halfTime){
-                const scoreTd = tr.querySelector('td:nth-child(3)');
+            const scoreTd = tr.querySelector("td:nth-child(3)");
+
+            if (halfTime) {
                 addHalfTimeAnimation(scoreTd);
+            } else {
+                removeHalfTimeAnimation(scoreTd);
+            }
+
+            // Falls startTime existiert → Uhr starten
+            if (startTime) {
+                startMatchTimer(doc.id, scoreTd, startTime, halfTime);
             }
         });
-
-        const nextGameDoc = doc(db, collectionName, "next_game");
-        const nextSnap = await getDoc(nextGameDoc);
-        if(nextSnap.exists()){
-            const data = nextSnap.data();
-            if(data.nextGameTime){
-                const nextGameTime = data.nextGameTime.toDate().getTime();
-                clearInterval(window.nextGameInterval);
-                updateCountdown(nextGameTime);
-                window.nextGameInterval = setInterval(() => updateCountdown(nextGameTime), 50);
-            }
-        }
     });
 }
 
