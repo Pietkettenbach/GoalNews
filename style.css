@@ -12,7 +12,6 @@ body {
   overflow-x: hidden;
   text-align: center;
   line-height: 1.6;
-  padding-top: 0;
 }
 
 /* ===== Breaking News ===== */
@@ -64,11 +63,11 @@ header,
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
+  padding: 12px 20px;
   background: linear-gradient(90deg, #1db954, #14a34a);
   color: white;
   position: fixed;
-  top: 40px; /* unter dem Ticker */
+  top: 40px; /* direkt unter dem Ticker */
   left: 0;
   width: 100%;
   z-index: 10000;
@@ -123,7 +122,7 @@ header .logo,
   z-index: 9998;
 }
 
-/* Links für Animation vorbereiten */
+/* Links vorbereiten */
 .nav-menu li {
   opacity: 0;
   transform: translateX(50px);
@@ -157,39 +156,35 @@ header .logo,
   }
 }
 
-/* Animate links nacheinander */
-#menu-toggle:checked ~ .nav-menu li:nth-child(1) {
+/* Animation der Menülinks */
+#menu-toggle:checked ~ .nav-menu li {
   animation: slideInRight 0.5s forwards;
+}
+#menu-toggle:checked ~ .nav-menu li:nth-child(1) {
   animation-delay: 0.1s;
 }
 #menu-toggle:checked ~ .nav-menu li:nth-child(2) {
-  animation: slideInRight 0.5s forwards;
   animation-delay: 0.2s;
 }
 #menu-toggle:checked ~ .nav-menu li:nth-child(3) {
-  animation: slideInRight 0.5s forwards;
   animation-delay: 0.3s;
 }
 #menu-toggle:checked ~ .nav-menu li:nth-child(4) {
-  animation: slideInRight 0.5s forwards;
   animation-delay: 0.4s;
 }
-#menu-toggle:checked ~ .nav-menu li:nth-child(5) {
-  animation: slideInRight 0.5s forwards;
-  animation-delay: 0.5s;
-}
 
-/* Reset links wenn Burger geschlossen */
+/* Reset */
 #menu-toggle:not(:checked) ~ .nav-menu li {
   opacity: 0;
   transform: translateX(50px);
 }
 
-/* Desktop Ansicht */
+/* ===== Desktop ===== */
 @media screen and (min-width: 768px) {
   .hamburger-icon {
     display: none;
   }
+
   .nav-menu {
     position: static;
     flex-direction: row;
@@ -197,40 +192,42 @@ header .logo,
     width: auto;
     background: transparent;
     padding: 0;
-    gap: 20px;
+    gap: 15px;
     opacity: 1;
     animation: none;
-    right: 0;
   }
+
   .nav-menu li {
     opacity: 1;
-    transform: translateX(0);
-    animation: none;
+    transform: none;
   }
+
   .nav-menu a {
     color: white;
+    font-size: 0.9rem;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: color 0.3s;
   }
+
   .nav-menu a:hover {
     color: #0f0f0f;
   }
 }
 
-/* ===== Content (Abstand unter Navbar + Ticker) ===== */
+/* ===== Content ===== */
 .content {
-  padding-top: 130px;
+  padding-top: 140px; /* Platz für Ticker + Navbar */
 }
 
 /* ===== Countdown ===== */
 .countdown-section {
   text-align: center;
-  margin: 50px 0;
+  margin: 60px 0 40px;
   color: #1db954;
 }
 
 .countdown-section h2 {
-  font-size: 3rem;
+  font-size: 2.6rem;
   margin-bottom: 10px;
 }
 
@@ -294,8 +291,9 @@ footer {
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   .content {
-    padding-top: 120px;
+    padding-top: 130px;
   }
+
   .countdown-section h2 {
     font-size: 2rem;
   }
@@ -306,10 +304,12 @@ footer {
     padding: 0 20px;
     font-size: 0.8rem;
   }
+
   .socials {
     flex-direction: column;
     gap: 12px;
   }
+
   .matches {
     padding: 15px 10px;
   }
