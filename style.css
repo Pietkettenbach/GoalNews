@@ -35,7 +35,7 @@ header,
   padding: 15px 20px;
   background: linear-gradient(90deg, #1db954, #14a34a);
   color: white;
-  position: relative; /* normal scrollbar */
+  position: relative;
   z-index: 9999;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
@@ -76,7 +76,7 @@ header .logo,
   list-style: none;
   display: flex;
   flex-direction: column;
-  position: fixed; /* start hidden offscreen */
+  position: fixed;
   top: 0;
   right: -100%;
   width: 70%;
@@ -84,24 +84,14 @@ header .logo,
   background-color: #111;
   padding-top: 80px;
   gap: 20px;
-  transition: right 0.3s ease-in-out, opacity 0.3s ease;
+  transition: right 0.3s ease-in-out;
   z-index: 9998;
-  opacity: 0;
 }
 
-/* Menü sichtbar + fixed wenn Burger aktiv */
-#menu-toggle:checked ~ .nav-menu {
-  right: 0;
-  opacity: 1;
-}
-
+/* Links für Animation vorbereiten */
 .nav-menu li {
-  text-align: center;
-}
-
-.nav-menu a {
-  color: #1db954;
-  font-size: 1.1rem;
+  opacity: 0;
+  transform: translateX(50px);
 }
 
 /* Hamburger Animation */
@@ -115,8 +105,9 @@ header .logo,
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* ===== Navbar fixiert beim geöffneten Burger ===== */
-#menu-toggle:checked ~ .navbar {
+/* ===== Navbar + Menü fixieren beim geöffneten Burger ===== */
+#menu-toggle:checked ~ .navbar,
+#menu-toggle:checked ~ .nav-menu {
   position: fixed;
   top: 0;
   left: 0;
@@ -124,23 +115,76 @@ header .logo,
   z-index: 9999;
 }
 
-/* Fade+Slide Animation fürs Menü */
-@keyframes fadeInMenu {
-  from {
+/* Menü sichtbar */
+#menu-toggle:checked ~ .nav-menu {
+  right: 0;
+}
+
+/* ===== Keyframes ===== */
+@keyframes slideInRight {
+  0% {
     opacity: 0;
-    transform: translateX(20px);
+    transform: translateX(50px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
-#menu-toggle:checked ~ .nav-menu {
-  animation: fadeInMenu 0.4s forwards;
+/* Animate links nacheinander */
+#menu-toggle:checked ~ .nav-menu li:nth-child(1) {
+  animation: slideInRight 0.5s forwards;
+  animation-delay: 0.1s;
+}
+#menu-toggle:checked ~ .nav-menu li:nth-child(2) {
+  animation: slideInRight 0.5s forwards;
+  animation-delay: 0.2s;
+}
+#menu-toggle:checked ~ .nav-menu li:nth-child(3) {
+  animation: slideInRight 0.5s forwards;
+  animation-delay: 0.3s;
+}
+#menu-toggle:checked ~ .nav-menu li:nth-child(4) {
+  animation: slideInRight 0.5s forwards;
+  animation-delay: 0.4s;
+}
+#menu-toggle:checked ~ .nav-menu li:nth-child(5) {
+  animation: slideInRight 0.5s forwards;
+  animation-delay: 0.5s;
+}
+#menu-toggle:checked ~ .nav-menu li:nth-child(6) {
+  animation: slideInRight 0.5s forwards;
+  animation-delay: 0.6s;
+}
+#menu-toggle:checked ~ .nav-menu li:nth-child(7) {
+  animation: slideInRight 0.5s forwards;
+  animation-delay: 0.7s;
+}
+#menu-toggle:checked ~ .nav-menu li:nth-child(8) {
+  animation: slideInRight 0.5s forwards;
+  animation-delay: 0.8s;
+}
+#menu-toggle:checked ~ .nav-menu li:nth-child(9) {
+  animation: slideInRight 0.5s forwards;
+  animation-delay: 0.9s;
+}
+#menu-toggle:checked ~ .nav-menu li:nth-child(10) {
+  animation: slideInRight 0.5s forwards;
+  animation-delay: 1s;
+}
+#menu-toggle:checked ~ .nav-menu li:nth-child(11) {
+  animation: slideInRight 0.5s forwards;
+  animation-delay: 1.1s;
 }
 
-/* ===== Desktop ===== */
+/* Reset links wenn Burger geschlossen */
+#menu-toggle:not(:checked) ~ .nav-menu li {
+  opacity: 0;
+  transform: translateX(50px);
+}
+
+/* Desktop */
 @media screen and (min-width: 768px) {
   .hamburger-icon {
     display: none;
@@ -156,6 +200,11 @@ header .logo,
     opacity: 1;
     animation: none;
     right: 0;
+  }
+  .nav-menu li {
+    opacity: 1;
+    transform: translateX(0);
+    animation: none;
   }
   .nav-menu a {
     color: white;
