@@ -65,15 +65,9 @@
         transition: all 0.5s ease;
       }
       @keyframes pop {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.5);
-        }
-        100% {
-          transform: scale(1.2);
-        }
+        0% { transform: scale(1); }
+        50% { transform: scale(1.5); }
+        100% { transform: scale(1.2); }
       }
 
       #nextGameCountdown {
@@ -103,18 +97,9 @@
         animation: halftimePulse 1.5s infinite alternate;
       }
       @keyframes halftimePulse {
-        0% {
-          transform: scale(1);
-          opacity: 0.8;
-        }
-        50% {
-          transform: scale(1.2);
-          opacity: 1;
-        }
-        100% {
-          transform: scale(1);
-          opacity: 0.9;
-        }
+        0% { transform: scale(1); opacity: 0.8; }
+        50% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(1); opacity: 0.9; }
       }
 
       /* Uhr */
@@ -138,50 +123,53 @@
         opacity: 0;
         transform: translateY(20px) scale(0.8);
         animation: varCool 1.5s ease forwards,
-          varGlow 2s ease-in-out infinite alternate;
+                   varGlow 2s ease-in-out infinite alternate;
         text-align: center;
       }
       @keyframes varCool {
-        0% {
-          opacity: 0;
-          transform: translateY(20px) scale(0.8);
-        }
-        50% {
-          opacity: 1;
-          transform: translateY(-5px) scale(1.1);
-        }
-        70% {
-          transform: translateY(0) scale(1);
-        }
-        100% {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
+        0% { opacity: 0; transform: translateY(20px) scale(0.8); }
+        50% { opacity: 1; transform: translateY(-5px) scale(1.1); }
+        70% { transform: translateY(0) scale(1); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
       }
       @keyframes varGlow {
-        0% {
-          box-shadow: 0 0 5px rgba(255, 223, 0, 0.6);
-        }
-        50% {
-          box-shadow: 0 0 15px rgba(255, 255, 200, 0.9);
-        }
-        100% {
-          box-shadow: 0 0 5px rgba(255, 223, 0, 0.6);
-        }
+        0% { box-shadow: 0 0 5px rgba(255, 223, 0, 0.6); }
+        50% { box-shadow: 0 0 15px rgba(255, 255, 200, 0.9); }
+        100% { box-shadow: 0 0 5px rgba(255, 223, 0, 0.6); }
       }
 
-      /* HIDDEN BREAKING NEWS */
+      /* 🔒 Sperranimation für Breaking News */
       #breakingNews.locked {
-        opacity: 0.2;
-        filter: grayscale(1);
+        position: relative;
         pointer-events: none;
+        height: 50px; 
+        overflow: hidden;
+      }
+      #breakingNews.locked::before {
+        content: "🔒 Breaking News gesperrt! Kaufe sie mit COINS";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #1db954;
+        font-weight: bold;
+        font-size: 1.2rem;
+        animation: lockSlide 2s infinite alternate;
+      }
+      #breakingNews.locked .news-wrapper {
+        display: none;
+      }
+      @keyframes lockSlide {
+        0% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
+        50% { transform: translateX(-50%) translateY(-5px); opacity: 1; }
+        100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
       }
     </style>
   </head>
 
   <body>
     <!-- Breaking News -->
-    <div id="breakingNews" class="locked"> <!-- erscheint gesperrt -->
+    <div id="breakingNews" class="locked">
       <div class="news-wrapper">
         <span class="news-item">Deutschland-Kader für November-Länderspiele enthält fünf Spieler des FC Bayern München</span>
         <span class="news-item">Julian Nagelsmann betont: Im letzten WM-Quali-Block geht’s nur noch um Siege, keine Experimente mehr</span>
@@ -209,9 +197,8 @@
         <li><a href="comments.html">Kommentar Forum</a></li>
         <li><a href="lastgameday.html">Letzter Spieltag</a></li>
         <li><a href="feedback.html">Helfen Sie uns!</a></li>
-        <li><a href="https://whatsapp.com/channel/0029Vb7PDwN8V0toB3ATWZ1Y"
-            >WhatsApp</a
-          ></li>
+        <li><a href="coins.html">Wass sind COINS</a></li>
+        <li><a href="https://whatsapp.com/channel/0029Vb7PDwN8V0toB3ATWZ1Y">WhatsApp</a></li>
         <li><a href="https://www.youtube.com/@Goalnewsde">YouTube</a></li>
       </ul>
     </header>
@@ -225,14 +212,10 @@
     <!-- 🏆 Aktueller Bundesliga-Spieltag -->
     <div class="matches" style="text-align: center; margin-top: 40px">
       <h2 style="color: #1db954">🏆 Bundesliga-Spieltag 11</h2>
-      <h3 style="color: #fff; margin-bottom: 20px">
-        11. Spieltag (21. - 23. November)
-      </h3>
-
+      <h3 style="color: #fff; margin-bottom: 20px">11. Spieltag (21. - 23. November)</h3>
       <div style="color: #eee">
         <h4 style="color: #1db954">Freitag:</h4>
         <p>Mainz 05 20:30 TSG Hoffenheim</p>
-
         <h4 style="color: #1db954">Samstag:</h4>
         <p>
           Bayern München 15:30 SC Freiburg<br />
@@ -240,11 +223,8 @@
           VfL Wolfsburg 15:30 Bayer Leverkusen<br />
           FC Augsburg 15:30 Hamburger SV<br />
           FC Heidenheim 15:30 Bor. M'gladbach<br />
-          <strong style="color: gold"
-            >Topspiel: 1. FC Köln 18:30 Eintracht Frankfurt</strong
-          >
+          <strong style="color: gold">Topspiel: 1. FC Köln 18:30 Eintracht Frankfurt</strong>
         </p>
-
         <h4 style="color: #1db954">Sonntag:</h4>
         <p>
           RB Leipzig 15:30 Werder Bremen<br />
@@ -268,9 +248,7 @@
           </tr>
         </thead>
         <tbody id="tableBody">
-          <tr>
-            <td colspan="3">Lade Spiele...</td>
-          </tr>
+          <tr><td colspan="3">Lade Spiele...</td></tr>
         </tbody>
       </table>
     </section>
@@ -287,17 +265,8 @@
     <!-- Firebase Live Games + Breaking News Zugriff -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-      import {
-        getFirestore,
-        collection,
-        doc,
-        getDoc,
-        onSnapshot
-      } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-      import {
-        getAuth,
-        onAuthStateChanged
-      } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+      import { getFirestore, collection, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+      import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyBmIcdFtxv4jBJKdiAkEiwnkQ8yRwiG_0w",
@@ -313,7 +282,7 @@
       const auth = getAuth(app);
 
       //--------------------------------------------------------------------
-      // 🔥 BREAKING NEWS SPERRE CODE
+      // 🔥 BREAKING NEWS SPERRE / FREISCHALTUNG
       //--------------------------------------------------------------------
       const breakingEl = document.getElementById("breakingNews");
 
@@ -324,13 +293,15 @@
         }
 
         const userRef = doc(db, "users", user.uid);
-        const snap = await getDoc(userRef);
 
-        if (snap.exists() && snap.data().breakingNews === true) {
-          breakingEl.classList.remove("locked");
-        } else {
-          breakingEl.classList.add("locked");
-        }
+        onSnapshot(userRef, (snap) => {
+          const data = snap.data();
+          if (data && data.breakingNews === true) {
+            breakingEl.classList.remove("locked");
+          } else {
+            breakingEl.classList.add("locked");
+          }
+        });
       });
       //--------------------------------------------------------------------
 
@@ -383,9 +354,7 @@
         }
         varDiv.textContent = comment;
         varDiv.style.opacity = 1;
-        setTimeout(() => {
-          varDiv.style.opacity = 0;
-        }, 5000);
+        setTimeout(() => { varDiv.style.opacity = 0; }, 5000);
       }
 
       async function initLiveGames() {
@@ -393,8 +362,7 @@
         onSnapshot(colRef, (snapshot) => {
           tableBody.innerHTML = "";
           if (snapshot.empty) {
-            tableBody.innerHTML =
-              "<tr><td colspan='3'>Keine aktuellen Spiele</td></tr>";
+            tableBody.innerHTML = "<tr><td colspan='3'>Keine aktuellen Spiele</td></tr>";
             return;
           }
           snapshot.forEach((doc) => {
@@ -402,23 +370,16 @@
             if (doc.id === "next_game") return;
             const tr = document.createElement("tr");
             tr.innerHTML = `
-        <td class="${data.over ? "over-game" : ""}">${data.home || ""}</td>
-        <td class="${data.over ? "over-game" : ""}">${data.away || ""}</td>
-        <td class="${data.goal ? "goal-animation" : ""} ${
-              data.over ? "over-game" : ""
-            }">${data.score || ""}</td>
-      `;
+              <td class="${data.over ? "over-game" : ""}">${data.home || ""}</td>
+              <td class="${data.over ? "over-game" : ""}">${data.away || ""}</td>
+              <td class="${data.goal ? "goal-animation" : ""} ${data.over ? "over-game" : ""}">${data.score || ""}</td>
+            `;
             tableBody.appendChild(tr);
             const td = tr.querySelector("td:nth-child(3)");
             if (data.halfTime) addHalfTimeAnimation(td);
             else removeHalfTimeAnimation(td);
             if (data.startTime)
-              startMatchTimer(
-                doc.id,
-                td,
-                data.startTime.toDate().getTime(),
-                data.halfTime
-              );
+              startMatchTimer(doc.id, td, data.startTime.toDate().getTime(), data.halfTime);
             if (data.varComment) showVARComment(td, data.varComment);
           });
         });
