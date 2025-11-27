@@ -17,6 +17,195 @@
     <meta name="theme-color" content="#1db954" />
     <link rel="apple-touch-icon" href="https://i.ibb.co/21R6p75W/Logo-1.jpg" />
     <link rel="manifest" href="manifest.json" />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #0f0f0f;
+        color: #eee;
+        text-align: center;
+        margin: 0;
+        user-select: none;
+      }
+      h2 {
+        margin: 20px 0;
+        color: #1db954;
+      }
+
+      /* Tabelle Live Spiele */
+      .matches-table {
+        width: 95%;
+        max-width: 1200px;
+        margin: 20px auto;
+        border-collapse: collapse;
+      }
+      .matches-table th,
+      .matches-table td {
+        border: 1px solid #444;
+        padding: 15px 20px;
+        text-align: center;
+        transition: all 0.5s ease;
+        position: relative;
+        font-size: 1rem;
+      }
+      .matches-table th {
+        background: #1db954;
+        color: #000;
+      }
+      .goal-animation {
+        background: #00ff00;
+        color: #000;
+        font-weight: bold;
+        transform: scale(1.2);
+        animation: pop 0.5s forwards;
+      }
+      .over-game {
+        text-decoration: line-through;
+        opacity: 0.6;
+        transition: all 0.5s ease;
+      }
+      @keyframes pop {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.5);
+        }
+        100% {
+          transform: scale(1.2);
+        }
+      }
+
+      #nextGameCountdown {
+        font-size: 1.5rem;
+        margin: 15px 0;
+        color: #1db954;
+      }
+      footer {
+        margin-top: 30px;
+        padding: 15px;
+        background: #111;
+        color: #eee;
+      }
+
+      /* Halbzeit Label */
+      .half-time-animation {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(29, 185, 84, 0.9);
+        color: #000;
+        font-weight: bold;
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        pointer-events: none;
+        animation: halftimePulse 1.5s infinite alternate;
+      }
+      @keyframes halftimePulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0.9;
+        }
+      }
+
+      /* Uhr */
+      .match-timer {
+        display: block;
+        margin-top: 8px;
+        font-size: 0.9rem;
+        color: #1db954;
+      }
+
+      /* VAR Kommentar */
+      .var-comment {
+        display: block;
+        margin-top: 5px;
+        background: linear-gradient(135deg, #ffd700, #ffea70);
+        color: #000;
+        font-weight: bold;
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+        animation: varCool 1.5s ease forwards,
+          varGlow 2s ease-in-out infinite alternate;
+        text-align: center;
+      }
+      @keyframes varCool {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.8);
+        }
+        50% {
+          opacity: 1;
+          transform: translateY(-5px) scale(1.1);
+        }
+        70% {
+          transform: translateY(0) scale(1);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      @keyframes varGlow {
+        0% {
+          box-shadow: 0 0 5px rgba(255, 223, 0, 0.6);
+        }
+        50% {
+          box-shadow: 0 0 15px rgba(255, 255, 200, 0.9);
+        }
+        100% {
+          box-shadow: 0 0 5px rgba(255, 223, 0, 0.6);
+        }
+      }
+
+      /* 🔒 Sperranimation für Breaking News */
+      #breakingNews.locked {
+        position: relative;
+        pointer-events: none;
+        height: 50px;
+        overflow: hidden;
+      }
+      #breakingNews.locked::before {
+        content: "🔒 Breaking News gesperrt! Kaufe sie mit COINS";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #1db954;
+        font-weight: bold;
+        font-size: 1.2rem;
+        animation: lockSlide 2s infinite alternate;
+      }
+      #breakingNews.locked .news-wrapper {
+        display: none;
+      }
+      @keyframes lockSlide {
+        0% {
+          transform: translateX(-50%) translateY(0);
+          opacity: 0.6;
+        }
+        50% {
+          transform: translateX(-50%) translateY(-5px);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(-50%) translateY(0);
+          opacity: 0.6;
+        }
+      }
+    </style>
   </head>
 
   <body>
