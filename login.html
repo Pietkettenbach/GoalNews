@@ -4,9 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-
     <style>
-      /* … dein bisheriges CSS … */
       * {
         margin: 0;
         padding: 0;
@@ -59,17 +57,19 @@
         color: #4e73df;
         text-decoration: none;
       }
+      .error {
+        color: #ff5555;
+        margin-top: 10px;
+      }
     </style>
   </head>
-
   <body>
     <div class="container">
       <h2>Login</h2>
-
       <input id="email" type="email" placeholder="E-Mail" />
       <input id="password" type="password" placeholder="Passwort" />
       <button id="loginBtn">Login</button>
-
+      <div id="errorMsg" class="error"></div>
       <a href="register.html">Noch kein Konto? Registrieren</a>
     </div>
 
@@ -81,27 +81,40 @@
       } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
       const firebaseConfig = {
-        apiKey: "…",
-        authDomain: "…",
-        projectId: "…",
-        storageBucket: "…",
-        messagingSenderId: "…",
-        appId: "…",
+        apiKey: "AIzaSyBmIcdFtxv4jBJKdiAkEiwnkQ8yRwiG_0w",
+        authDomain: "goalnewsde-community.firebaseapp.com",
+        projectId: "goalnewsde-community",
+        storageBucket: "goalnewsde-community.firebasestorage.app",
+        messagingSenderId: "134523022055",
+        appId: "1:134523022055:web:4f35ed7812d06e4fb55042",
       };
 
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
 
-      document.getElementById("loginBtn").onclick = async () => {
+      const loginBtn = document.getElementById("loginBtn");
+      const errorMsg = document.getElementById("errorMsg");
+
+      loginBtn.addEventListener("click", async () => {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
+        errorMsg.textContent = ""; // clear previous error
+
+        if (!email || !password) {
+          errorMsg.textContent = "Bro, gib deine E-Mail und Passwort ein!";
+          return;
+        }
+
         try {
           await signInWithEmailAndPassword(auth, email, password);
+          // ✅ Redirect to special page
           window.location.href = "special.html";
         } catch (err) {
-          alert("E-Mail oder Passwort falsch, Bro.");
+          console.error(err);
+          errorMsg.textContent =
+            "E-Mail oder Passwort falsch, Bro. Check deine Eingabe!";
         }
-      };
+      });
     </script>
   </body>
 </html>
