@@ -223,11 +223,13 @@
       const auth = getAuth(app);
       const db = getFirestore(app);
 
-      const ADMIN_UIDS = [
-        "g7Lsh9MshAOkwbyHcO3NFsnUpZl1",
-        "lwRnonWRhMOeYedZLAldySkEKso2",
-        "xyhCSnv0qDYtaidhaBzCHlNXONV2",
-      ];
+      // 🔒 Nur eingeloggte User dürfen special.html sehen
+      onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          window.location.href = "/404.html"; // nicht eingeloggte User weiterleiten
+        }
+      });
+      const ADMIN_UIDS = ["5Oe5YOBOtfOGQsRJ3XUjr3kemnX2"];
 
       const favTeamInput = document.getElementById("favTeamInput");
       const saveTeamBtn = document.getElementById("saveTeamBtn");
