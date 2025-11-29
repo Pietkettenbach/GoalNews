@@ -81,6 +81,15 @@
         margin-top: 15px;
         text-decoration: none;
       }
+
+      .email-optin {
+        text-align: left;
+        margin: 10px 0;
+      }
+
+      .email-optin label {
+        margin-left: 5px;
+      }
     </style>
   </head>
   <body>
@@ -93,6 +102,11 @@
         <span class="togglePwd" id="togglePwd">👁️</span>
       </div>
       <input id="username" type="text" placeholder="Username" />
+
+      <div class="email-optin">
+        <input type="checkbox" id="allowEmails" />
+        <label for="allowEmails">Ich möchte E-Mail-Benachrichtigungen erhalten</label>
+      </div>
 
       <button id="registerBtn">Registrieren</button>
 
@@ -137,6 +151,7 @@
         const email = document.getElementById("email").value;
         const password = pwd.value;
         const username = document.getElementById("username").value.trim();
+        const allowEmails = document.getElementById("allowEmails").checked;
 
         if (!email || !password || !username) {
           alert("Bitte fülle alles aus!");
@@ -152,25 +167,30 @@
           );
           const user = userCred.user;
 
-          // User-Daten speichern
+          // User-Daten in Firestore speichern
           await setDoc(doc(db, "users", user.uid), {
             username: username,
             email: email,
             createdAt: new Date().toISOString(),
-            emailVerified: false
+            emailVerified: false,
+            allowEmails: allowEmails
           });
 
-          // Verifizierungs-Mail senden
+          
           await sendEmailVerification(user);
+          
 
           alert(
-            "Wir haben dir eine Bestätigungs-E-Mail gesendet!\nBitte bestätige deine E-Mail, bevor du dich einloggst."
+            "Registrierung erfolgreich!\n" +
+            (allowEmails ? "Wir haben dir eine Bestätigungs-E-Mail gesendet!" : "Du hast keine E-Mail-Benachrichtigungen aktiviert.") +
+            "\nBitte bestätige deine E-Mail, bevor du dich einloggst."
           );
 
           window.location.href = "login.html";
 
         } catch (err) {
           alert("Fehler: " + err.message);
+          console.error(err);
         }
       };
     </script>
