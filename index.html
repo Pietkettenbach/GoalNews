@@ -347,18 +347,29 @@
     <script>
       const matchDate = new Date("November 29, 2025 15:30:00").getTime();
       const countdownEl = document.getElementById("countdown");
+
       setInterval(() => {
         const now = new Date().getTime();
         const diff = matchDate - now;
-        if (diff < 0) {
+
+        if (diff <= 0) {
           countdownEl.textContent = "Anpfiff!";
           return;
         }
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((diff % (1000 * 60)) / 1000);
-        countdownEl.textContent = `${d}d ${h}h ${m}m ${s}s`;
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / (60 * 60 * 24));
+        const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+        const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+        const seconds = totalSeconds % 60;
+
+        if (days > 0) {
+          countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        } else if (hours > 0) {
+          countdownEl.textContent = `${hours}h ${minutes}m ${seconds}s`;
+        } else {
+          countdownEl.textContent = `${minutes}m ${seconds}s`;
+        }
       }, 1000);
     </script>
   </body>
