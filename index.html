@@ -191,7 +191,6 @@
       <a href="security.html">Sicherheit</a> |
       <a href="Impressum.html">Impressum</a>
     </footer>
-
     <!-- Firebase Live Games + Breaking News Zugriff -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
@@ -204,6 +203,8 @@
       import {
         getAuth,
         onAuthStateChanged,
+        setPersistence,
+        browserLocalPersistence,
       } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
       const firebaseConfig = {
@@ -219,9 +220,14 @@
       const db = getFirestore(app);
       const auth = getAuth(app);
 
-      //--------------------------------------------------------------------
-      // 🔥 BREAKING NEWS SPERRE / FREISCHALTUNG
-      //--------------------------------------------------------------------
+      // --------------------------------------------------------------
+      // 🔒 PERSISTENTER LOGIN (User bleibt dauerhaft eingeloggt)
+      // --------------------------------------------------------------
+      setPersistence(auth, browserLocalPersistence);
+
+      // --------------------------------------------------------------
+      // 🔥 BREAKING NEWS FREISCHALTUNG
+      // --------------------------------------------------------------
       const breakingEl = document.getElementById("breakingNews");
 
       onAuthStateChanged(auth, async (user) => {
@@ -241,8 +247,10 @@
           }
         });
       });
-      //--------------------------------------------------------------------
 
+      // --------------------------------------------------------------
+      // 🔥 LIVE SPIELE
+      // --------------------------------------------------------------
       const tableBody = document.getElementById("tableBody");
       const matchTimers = new Map();
 
@@ -254,35 +262,44 @@
           td.appendChild(overlay);
         }
       }
+
       function removeHalfTimeAnimation(td) {
         const overlay = td.querySelector(".half-time-animation");
         if (overlay) overlay.remove();
       }
+
       function formatTime(ms) {
         const totalSeconds = Math.floor(ms / 1000);
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
         return `${minutes}:${seconds.toString().padStart(2, "0")}`;
       }
+
       function startMatchTimer(id, td, startTime, halfTime) {
         if (matchTimers.has(id)) clearInterval(matchTimers.get(id));
         let paused = halfTime;
+
         const timerEl = document.createElement("span");
         timerEl.className = "match-timer";
         td.appendChild(timerEl);
+
         const interval = setInterval(() => {
           if (!paused) {
             const elapsed = Date.now() - startTime;
-            if (elapsed < 90 * 60 * 1000)
+            if (elapsed < 90 * 60 * 1000) {
               timerEl.textContent = `⏱️ ${formatTime(elapsed)}`;
-            else {
+            } else {
               timerEl.textContent = "🕛 90:00";
               clearInterval(interval);
             }
-          } else timerEl.textContent = "⏸️ Halbzeit";
+          } else {
+            timerEl.textContent = "⏸️ Halbzeit";
+          }
         }, 1000);
+
         matchTimers.set(id, interval);
       }
+
       function showVARComment(td, comment) {
         let varDiv = td.querySelector(".var-comment");
         if (!varDiv) {
@@ -292,81 +309,56 @@
         }
         varDiv.textContent = comment;
         varDiv.style.opacity = 1;
-        setTimeout(() => {
-          varDiv.style.opacity = 0;
-        }, 5000);
+        setTimeout(() => (varDiv.style.opacity = 0), 5000);
       }
 
       async function initLiveGames() {
         const colRef = collection(db, "liveGames");
+
         onSnapshot(colRef, (snapshot) => {
           tableBody.innerHTML = "";
+
           if (snapshot.empty) {
             tableBody.innerHTML =
               "<tr><td colspan='3'>Keine aktuellen Spiele</td></tr>";
             return;
           }
-          snapshot.forEach((doc) => {
-            const data = doc.data();
-            if (doc.id === "next_game") return;
+
+          snapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            if (docSnap.id === "next_game") return;
+
             const tr = document.createElement("tr");
             tr.innerHTML = `
-              <td class="${data.over ? "over-game" : ""}">${
-              data.home || ""
-            }</td>
-              <td class="${data.over ? "over-game" : ""}">${
-              data.away || ""
-            }</td>
-              <td class="${data.goal ? "goal-animation" : ""} ${
+          <td class="${data.over ? "over-game" : ""}">${data.home || ""}</td>
+          <td class="${data.over ? "over-game" : ""}">${data.away || ""}</td>
+          <td class="${data.goal ? "goal-animation" : ""} ${
               data.over ? "over-game" : ""
             }">${data.score || ""}</td>
-            `;
+        `;
+
             tableBody.appendChild(tr);
+
             const td = tr.querySelector("td:nth-child(3)");
+
             if (data.halfTime) addHalfTimeAnimation(td);
             else removeHalfTimeAnimation(td);
-            if (data.startTime)
+
+            if (data.startTime) {
               startMatchTimer(
-                doc.id,
+                docSnap.id,
                 td,
                 data.startTime.toDate().getTime(),
                 data.halfTime
               );
+            }
+
             if (data.varComment) showVARComment(td, data.varComment);
           });
         });
       }
+
       initLiveGames();
-    </script>
-
-    <!-- Countdown -->
-    <script>
-      const matchDate = new Date("November 29, 2025 15:30:00").getTime();
-      const countdownEl = document.getElementById("countdown");
-
-      setInterval(() => {
-        const now = new Date().getTime();
-        const diff = matchDate - now;
-
-        if (diff <= 0) {
-          countdownEl.textContent = "Anpfiff!";
-          return;
-        }
-
-        const totalSeconds = Math.floor(diff / 1000);
-        const days = Math.floor(totalSeconds / (60 * 60 * 24));
-        const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
-        const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
-        const seconds = totalSeconds % 60;
-
-        if (days > 0) {
-          countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        } else if (hours > 0) {
-          countdownEl.textContent = `${hours}h ${minutes}m ${seconds}s`;
-        } else {
-          countdownEl.textContent = `${minutes}m ${seconds}s`;
-        }
-      }, 1000);
     </script>
   </body>
 </html>
