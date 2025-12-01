@@ -108,7 +108,7 @@
         errorMsg.textContent = ""; // vorherige Fehlermeldung löschen
 
         if (!email || !password) {
-          errorMsg.textContent = "Bro, gib deine E-Mail und Passwort ein!";
+          errorMsg.textContent = "Gib deine E-Mail und Passwort ein!";
           return;
         }
 
@@ -131,7 +131,7 @@
         } catch (err) {
           console.error(err);
           errorMsg.textContent =
-            "E-Mail oder Passwort falsch, Bro. Check deine Eingabe!";
+            "Deine E-Mail oder dein Passwort ist falsch! Überprüfe deine Eingabe!";
         }
       });
     </script>
