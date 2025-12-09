@@ -295,12 +295,9 @@
     </header>
 
     <!-- Countdown & Adventskerzen -->
-    <h2>⏱️ 13. Spieltag startet in:</h2>
+    <h2>⏱️ 14. Spieltag startet in:</h2>
     <div id="countdown">lade...</div>
-    <div id="adventCandles">
-      <span class="candle">🕯</span
-      <span class="candle">🕯</span>
-    </div>
+
     <p style="text-align: center; margin-top: 10px">
       🎄
       <a
@@ -314,23 +311,23 @@
     <!-- 🏆 Bundesliga Spieltag -->
     <div class="matches" style="text-align: center; margin-top: 40px">
       <h2>🏆 Bundesliga-Spieltag 13</h2>
-      <h3>13. Spieltag (5. - 7. Dezember)</h3>
+      <h3>13. Spieltag (12. - 14. Dezember)</h3>
       <div>
-        <h4>Freitag, 5.12.2025:</h4>
-        <p>FSV Mainz 05 20:30 M'gladbach</p>
-        <h4>Samstag, 6.12.2025:</h4>
+        <h4>Freitag, 12.12.2025:</h4>
+        <p>Union Berlin 20:30 RB Leipzig</p>
+        <h4>Samstag, 13.12.2025:</h4>
         <p>
-          1. FC Köln 15:30 FC St. Pauli<br />
-          VfL Wolfsburg 15:30 Union Berlin<br />
-          FC Augsburg 15:30 Bayer Leverkusen<br />
-          FC Heidenheim 15:30 SC Freiburg <br />
-          VfB Stuttgart 15:30 Bayern München<br />
-          <strong>Topspiel: RB Leipzig 18:30 Eintracht Frankfurt</strong>
+          Bor. M'gladbach 15:30 VfL Wolfsburg<br />
+          Eintracht Frankfurt 15:30 FC Augsburg<br />
+          FC St. Pauli 15:30 1. FC Heidenheim<br />
+          TSG Hoffenheim 15:30 Hamburger SV<br />
+          <strong>Topspiel: Bayer Leverkusen 18:30 1. FC Köln</strong>
         </p>
-        <h4>Sonntag, 7.12.2025:</h4>
+        <h4>Sonntag, 14.12.2025:</h4>
         <p>
-          Hamburger SV 15:30 Werder Bremen<br />
-          Borussia Dortmund 17:30 TSG Hoffenheim
+          Borussia Dortmund 15:30 SC Freiburg<br />
+          Bayern München 17:30 FSV Mainz 05<br />
+          Werder Bremen 19:30 VfB Stuttgart
         </p>
       </div>
     </div>
@@ -340,7 +337,10 @@
       <h2>Live Spiele</h2>
       <p>Alle Spiele sind live und im Gange</p>
       <p>Durchgestrichene Spiele sind beendet</p>
-      <p>Unser Experten Tipp Gibt es auf unserer <a href="experten-tipp.html">Experten Seite</a></p>
+      <p>
+        Unser Experten Tipp Gibt es auf unserer
+        <a href="experten-tipp.html">Experten Seite</a>
+      </p>
       <table class="matches-table">
         <thead>
           <tr>
@@ -370,7 +370,7 @@
     <script>
       // Countdown
       const countdownEl = document.getElementById("countdown");
-      const targetDate = new Date("2025-12-05 20:30:00");
+      const targetDate = new Date("2025-12-12 20:30:00");
       function updateCountdown() {
         const now = new Date();
         let diff = targetDate - now;
@@ -470,7 +470,7 @@
         collection,
         doc,
         onSnapshot,
-        getDoc
+        getDoc,
       } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
       import {
         getAuth,
@@ -493,11 +493,10 @@
       const auth = getAuth(app);
       setPersistence(auth, browserLocalPersistence);
 
-      
       // --- Wartungsmodus prüfen live ---
       function watchMaintenance() {
         const docRef = doc(db, "settings", "main");
-      
+
         onSnapshot(docRef, (snap) => {
           if (snap.exists()) {
             const data = snap.data();
@@ -511,10 +510,8 @@
         });
       }
 
-// Direkt starten
+      // Direkt starten
       watchMaintenance();
-
-
 
       const breakingEl = document.getElementById("breakingNews");
       onAuthStateChanged(auth, (user) => {
