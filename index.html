@@ -365,7 +365,10 @@
 
     <!-- Footer -->
     <footer>
-      © 2025 GoalNews | Don't Steal Our Stuff<br />
+      © 2025 GoalNews | Don't Steal Our Stuff | Music by Pixabay | Merry X-mas<br />
+      <span id="xmasCountdown" style="font-size: 0.9em; color: gold;">
+      🎅 Lade Weihnachts-Countdown...
+      </span><br />
       <a href="mailto:info@goalnewsde.de">Email</a> |
       <a href="agb.html">Datenschutz</a> |
       <a href="security.html">Sicherheit</a> |
@@ -637,5 +640,67 @@
       }
       initLiveGames();
     </script>
+    <audio id="bgMusic" loop>
+      <source src="jingle-bells-444574.mp3" type="audio/mpeg">
+      Dein Browser unterstützt kein Audio.
+    </audio>
+    <script>
+    const music = document.getElementById("bgMusic");
+
+  // Autoplay nach User-Interaktion (Browser-Regel)
+  function startMusic() {
+    music.volume = 0.4; // Lautstärke (0.0 - 1.0)
+    music.play().catch(() => {
+      console.log("Autoplay blockiert – warte auf Interaktion");
+    });
+    document.removeEventListener("click", startMusic);
+  }
+
+  document.addEventListener("click", startMusic);
+
+  // Stoppen wenn Tab gewechselt oder minimiert
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      music.pause();
+     } else {
+      music.play().catch(() => {});
+      }
+   });
+
+  // Sicherheit: Stoppen beim Schließen
+    window.addEventListener("beforeunload", () => {
+      music.pause();
+    });
+  </script>
+
+  <script>
+  const xmasEl = document.getElementById("xmasCountdown");
+
+  function updateXmasCountdown() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const xmas = new Date(year, 11, 24, 0, 0, 0); // 24.12.
+
+    if (now >= xmas) {
+      xmasEl.textContent = "🎄 Frohe Weihnachten!";
+      return;
+    }
+
+    let diff = xmas - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    diff %= 1000 * 60 * 60 * 24;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    diff %= 1000 * 60 * 60;
+    const minutes = Math.floor(diff / (1000 * 60));
+
+    xmasEl.textContent =
+        `🎁 Heiligabend in ${days} Tagen ${hours} Std ${minutes} Min`;
+    }
+
+    updateXmasCountdown();
+    setInterval(updateXmasCountdown, 60000);
+   </script>
+
+
   </body>
 </html>
