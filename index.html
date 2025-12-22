@@ -112,11 +112,7 @@
         justify-content: center;
         margin: 10px 0;
       }
-      .candle {
-        font-size: 1.5em;
-        margin: 0 5px;
-        animation: candleGlow 1.5s infinite alternate;
-      }
+
       @keyframes candleGlow {
         0% {
           opacity: 0.5;
@@ -295,12 +291,8 @@
     </header>
 
     <!-- Countdown & Adventskerzen -->
-    <h2>⏱️ 15. Spieltag startet in:</h2>
+    <h2>⏱️ 16. Spieltag startet in:</h2>
     <div id="countdown">lade...</div>
-    <span class="candle">🕯</span>
-    <span class="candle">🕯</span>
-    <span class="candle">🕯</span>
-    <span class="candle">🕯</span>
 
     <p style="text-align: center; margin-top: 10px">
       🎄
@@ -318,22 +310,22 @@
       <h3>14. Spieltag (19. - 21. Dezember)</h3>
       <div>
         <h4>Freitag, 19.12.2025:</h4>
-        <p>Dortmund 2:0 M'gladbach (FT)</p>
+        <p>Dortmund 2:0 M'gladbach</p>
         <h4>Samstag, 20.12.2025:</h4>
         <p>
-          Augsburg 0:0 Bremen (FT)<br />
-          Hamburg 1:1 Frankfurt (FT)<br />
-          Köln 0:1 Union (FT)<br />
-          Stuttgart 0:0 Hoffenheim (FT)<br />
-          Wolfsburg 3:4 Freiburg (FT)<br />
+          Augsburg 0:0 Bremen<br />
+          Hamburg 1:1 Frankfurt<br />
+          Köln 0:1 Union<br />
+          Stuttgart 0:0 Hoffenheim<br />
+          Wolfsburg 3:4 Freiburg<br />
           <strong class="topspiel"
             >Topspiel: Leipzig 1:3 Leverkusen (FT)</strong
           >
         </p>
         <h4>Sonntag, 14.12.2025:</h4>
         <p>
-          Mainz vs. ST.Pauli (FT)<br />
-          Heidenheim 17:30 Uhr Bayern (Live)
+          Mainz 0:0 ST.Pauli<br />
+          Heidenheim 0:4 Bayern
         </p>
       </div>
     </div>
@@ -365,10 +357,11 @@
 
     <!-- Footer -->
     <footer>
-      © 2025 GoalNews | Don't Steal Our Stuff | Music by Pixabay | Merry X-mas<br />
-      <span id="xmasCountdown" style="font-size: 0.9em; color: gold;">
-      🎅 Lade Weihnachts-Countdown...
-      </span><br />
+      © 2025 GoalNews | Don't Steal Our Stuff | Music by Pixabay | Merry
+      X-mas<br />
+      <span id="xmasCountdown" style="font-size: 0.9em; color: gold">
+        🎅 Lade Weihnachts-Countdown... </span
+      ><br />
       <a href="mailto:info@goalnewsde.de">Email</a> |
       <a href="agb.html">Datenschutz</a> |
       <a href="security.html">Sicherheit</a> |
@@ -641,66 +634,63 @@
       initLiveGames();
     </script>
     <audio id="bgMusic" loop>
-      <source src="jingle-bells-444574.mp3" type="audio/mpeg">
+      <source src="jingle-bells-444574.mp3" type="audio/mpeg" />
       Dein Browser unterstützt kein Audio.
     </audio>
     <script>
-    const music = document.getElementById("bgMusic");
+      const music = document.getElementById("bgMusic");
 
-  // Autoplay nach User-Interaktion (Browser-Regel)
-  function startMusic() {
-    music.volume = 0.4; // Lautstärke (0.0 - 1.0)
-    music.play().catch(() => {
-      console.log("Autoplay blockiert – warte auf Interaktion");
-    });
-    document.removeEventListener("click", startMusic);
-  }
-
-  document.addEventListener("click", startMusic);
-
-  // Stoppen wenn Tab gewechselt oder minimiert
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      music.pause();
-     } else {
-      music.play().catch(() => {});
+      // Autoplay nach User-Interaktion (Browser-Regel)
+      function startMusic() {
+        music.volume = 0.4; // Lautstärke (0.0 - 1.0)
+        music.play().catch(() => {
+          console.log("Autoplay blockiert – warte auf Interaktion");
+        });
+        document.removeEventListener("click", startMusic);
       }
-   });
 
-  // Sicherheit: Stoppen beim Schließen
-    window.addEventListener("beforeunload", () => {
-      music.pause();
-    });
-  </script>
+      document.addEventListener("click", startMusic);
 
-  <script>
-  const xmasEl = document.getElementById("xmasCountdown");
+      // Stoppen wenn Tab gewechselt oder minimiert
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          music.pause();
+        } else {
+          music.play().catch(() => {});
+        }
+      });
 
-  function updateXmasCountdown() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const xmas = new Date(year, 11, 24, 0, 0, 0); // 24.12.
+      // Sicherheit: Stoppen beim Schließen
+      window.addEventListener("beforeunload", () => {
+        music.pause();
+      });
+    </script>
 
-    if (now >= xmas) {
-      xmasEl.textContent = "🎄 Frohe Weihnachten!";
-      return;
-    }
+    <script>
+      const xmasEl = document.getElementById("xmasCountdown");
 
-    let diff = xmas - now;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    diff %= 1000 * 60 * 60 * 24;
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    diff %= 1000 * 60 * 60;
-    const minutes = Math.floor(diff / (1000 * 60));
+      function updateXmasCountdown() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const xmas = new Date(year, 11, 24, 0, 0, 0); // 24.12.
 
-    xmasEl.textContent =
-        `🎁 Heiligabend in ${days} Tagen ${hours} Std ${minutes} Min`;
-    }
+        if (now >= xmas) {
+          xmasEl.textContent = "🎄 Frohe Weihnachten!";
+          return;
+        }
 
-    updateXmasCountdown();
-    setInterval(updateXmasCountdown, 60000);
-   </script>
+        let diff = xmas - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        diff %= 1000 * 60 * 60 * 24;
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        diff %= 1000 * 60 * 60;
+        const minutes = Math.floor(diff / (1000 * 60));
 
+        xmasEl.textContent = `🎁 Heiligabend in ${days} Tagen ${hours} Std ${minutes} Min`;
+      }
 
+      updateXmasCountdown();
+      setInterval(updateXmasCountdown, 60000);
+    </script>
   </body>
 </html>
