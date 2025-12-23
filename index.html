@@ -221,6 +221,33 @@
       .advent-day.opened .advent-tooltip {
         display: block;
       }
+
+      .gn-button {
+        display: inline-block;
+        margin: 40px auto;
+        padding: 16px 34px;
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+        color: #0e1511;
+        background: linear-gradient(135deg, #1db954, #7cffb2);
+        border-radius: 999px;
+        box-shadow: 0 8px 25px rgba(29, 185, 84, 0.45),
+          inset 0 0 0 rgba(255, 255, 255, 0);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      }
+
+      .gn-button:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 14px 40px rgba(29, 185, 84, 0.7);
+        filter: brightness(1.05);
+      }
+
+      .gn-button:active {
+        transform: scale(0.97);
+        box-shadow: 0 6px 15px rgba(29, 185, 84, 0.4);
+      }
     </style>
   </head>
 
@@ -289,6 +316,9 @@
         <li><a href="https://www.youtube.com/@Goalnewsde">YouTube</a></li>
       </ul>
     </header>
+
+    <!-- Afrika-Cup Button -->
+    <a href="Africa-cup.html" class="gn-button"> Africa Cup ansehen </a>
 
     <!-- Countdown & Adventskerzen -->
     <h2>⏱️ 16. Spieltag startet in:</h2>
