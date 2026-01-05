@@ -1,20 +1,20 @@
 {
-    "name": "GoalNewsDE",
-    "short_name": "GoalNewsDE",
-    "start_url": "https://goalnewsde.github.io/official.website/",
-    "display": "standalone",
-    "background_color": "#111",
-    "theme_color": "#1db954",
-    "icons": [
-        {
-            "src": "https://i.ibb.co/21R6p75W/Logo-1.jpg",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "https://i.ibb.co/21R6p75W/Logo-1.jpg",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ]
+  "name": "GoalNews",
+  "short_name": "GoalNews",
+  "start_url": "https://goalnews.website",
+  "display": "standalone",
+  "background_color": "#111",
+  "theme_color": "#1db954",
+  "icons": [
+    {
+      "src": "https://i.ibb.co/21R6p75W/Logo-1.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.ibb.co/21R6p75W/Logo-1.jpg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
