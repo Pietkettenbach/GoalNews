@@ -237,7 +237,8 @@ body {
   color: #eee;
   text-align: center;
   margin: 0;
-  user-select: none;
+  /* allow users to select/copy text (better UX) */
+  user-select: text;
 }
 
 h2 {
@@ -268,11 +269,12 @@ h2 {
 }
 
 .goal-animation {
-  background: #00ff00;
+  /* softer goal highlight to avoid harsh flashing */
+  background: #66ff66;
   color: #000;
   font-weight: bold;
-  transform: scale(1.2);
-  animation: pop 0.5s forwards;
+  transform: scale(1.05);
+  animation: pop 0.35s ease forwards;
 }
 
 .over-game {
@@ -356,9 +358,40 @@ footer {
   font-size: 0.9rem;
   opacity: 0;
   transform: translateY(20px) scale(0.8);
-  animation: varCool 1.5s ease forwards,
+  animation:
+    varCool 1.5s ease forwards,
     varGlow 2s ease-in-out infinite alternate;
   text-align: center;
+}
+
+/* Accessibility: visible focus outlines for keyboard users */
+.hamburger-icon:focus,
+.hamburger-icon:focus-visible,
+.nav-menu a:focus,
+.nav-menu a:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(29, 185, 84, 0.9);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .news-wrapper,
+  .goal-animation,
+  .var-comment,
+  .half-time-animation,
+  .hamburger-icon .bar {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Slower marquee on very small screens to improve readability */
+@media (max-width: 480px) {
+  .news-wrapper {
+    animation-duration: 40s;
+  }
 }
 
 @keyframes varCool {
