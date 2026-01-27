@@ -17,39 +17,6 @@
     <meta name="theme-color" content="#1db954" />
     <link rel="apple-touch-icon" href="https://i.ibb.co/21R6p75W/Logo-1.jpg" />
     <link rel="manifest" href="manifest.json" />
-
-    <style>
-      .gn-button {
-        display: inline-block;
-        margin: 40px auto;
-        padding: 16px 34px;
-        font-size: 1.05rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        text-decoration: none;
-        color: #0e1511;
-        background: linear-gradient(135deg, #1db954, #7cffb2);
-        border-radius: 999px;
-        box-shadow:
-          0 8px 25px rgba(29, 185, 84, 0.45),
-          inset 0 0 0 rgba(255, 255, 255, 0);
-        transition:
-          transform 0.2s ease,
-          box-shadow 0.2s ease,
-          filter 0.2s ease;
-      }
-
-      .gn-button:hover {
-        transform: translateY(-3px) scale(1.03);
-        box-shadow: 0 14px 40px rgba(29, 185, 84, 0.7);
-        filter: brightness(1.05);
-      }
-
-      .gn-button:active {
-        transform: scale(0.97);
-        box-shadow: 0 6px 15px rgba(29, 185, 84, 0.4);
-      }
-    </style>
   </head>
 
   <body>
@@ -90,7 +57,7 @@
       <ul class="nav-menu">
         <li><a href="über_uns.html">About Us</a></li>
         <li><a href="experten-tipp.html">Experten-Tipp</a></li>
-        <li><a href="votings.html">Abstimmungen</a></li>
+        
         <li><a href="login.html">Login/Registrieren</a></li>
         <li><a href="bundesliga.html">Bundesliga</a></li>
         <li><a href="2liga.html">2. Bundesliga</a></li>
@@ -107,35 +74,60 @@
       </ul>
     </header>
 
-    <!-- Afrika-Cup Button -->
-    <a href="africa-cup.html" class="gn-button"> Africa Cup ansehen </a>
+    <!-- Promotional Banner (under navbar) -->
+    <div
+      id="promoBanner"
+      class="promo-banner"
+      role="region"
+      aria-label="Werbebanner"
+    >
+      <div class="promo-inner">
+        <div class="promo-text">
+          <strong>Jetzt Follower werden</strong>
+          <div class="promo-sub">
+            Aktuelle News und Liveticker auf dem WhatsApp-Kanal!
+          </div>
+        </div>
+        <div class="promo-actions">
+          <a
+            href="https://whatsapp.com/channel/0029Vb7PDwN8V0toB3ATWZ1Y"
+            class="gn-button gn-button--small"
+            >Jetzt Mitglied werden!</a
+          >
+          <button class="promo-close" aria-label="Banner schließen">✕</button>
+        </div>
+      </div>
+    </div>
+
 
     <!-- Countdown -->
-    <h2>⏱️ 16. Spieltag startet in:</h2>
+    <h2>⏱️ 1. Spieltag startet in:</h2>
     <div id="countdown">lade...</div>
 
     <!-- 🏆 Bundesliga Spieltag -->
     <div class="matches" style="text-align: center; margin-top: 40px">
       <h2>🏆 Bundesliga-Spieltag 16</h2>
-      <h3>16. Spieltag (9. - 11. Januar)</h3>
+      <h3>16. Spieltag (30.1.2026 - 1.2.2026)</h3>
       <div>
-        <h4>Freitag, 9.1.2026:</h4>
-        <p>Eintracht Frankfurt 20:30 Bor. Dortmund</p>
-        <h4>Samstag, 10.1.2026:</h4>
+        <h4>Freitag, 30.1.2026:</h4>
+      
+      </p>1.FC Köln 20:30 VfL Wolfsburg</p>
+        
+      <h4>Samstag, 10.1.2026:</h4>
         <p>
-          SC Freiburg 15:30 Hamburger SV<br />
-          Werder Bremen 15:30 TSG Hoffenheim<br />
-          Union Berlin 15:30 Mainz 05<br />
-          FC St. Pauli 15:30 RB Leipzig<br />
-          1. FC Heidenheim 15:30 1. FC Köln<br />
+          Eintracht Frankfurt 15:30 Bayer Leverkusen <br />
+          FC Augsburg -15:30 FC St. Pauli<br />
+          RB Leipzig 15:30 FSV Mainz 05 <br />
+          TSG Hoffenheim 15:30 1. FC Union Berlin<br />
+          Werder Bremen 15:30 Bor. M'galdbach<br />
           <strong class="topspiel">
-            Topspiel: Bayer Leverkusen 18:30 VfB Stuttgart
+            Topspiel: Hamburger SV 18:30 Bayern München
           </strong>
         </p>
-        <h4>Sonntag, 11.1.2026:</h4>
+        <h4>Sonntag, 1.2.2026:</h4>
         <p>
-          Bor. M'galdbach 15:30 FC Augsburg<br />
-          Bayern München 17:30 VfL Wolfsburg
+          VfB Stuttgart 15:30 SC Freiburg<br />
+          Bor. Dortmund 17:30 1. FC Heidenheim
         </p>
       </div>
     </div>
@@ -363,6 +355,43 @@
         });
       }
       initLiveGames();
+    </script>
+    <script>
+      // Promo banner: close and persist state in localStorage (placed before closing body)
+      (function () {
+        const banner = document.getElementById("promoBanner");
+        if (!banner) return;
+        const closeBtn = banner.querySelector(".promo-close");
+        const storageKey = "promoBannerClosed_v1";
+
+        function hideBanner(save) {
+          try {
+            banner.style.display = "none";
+            if (save) localStorage.setItem(storageKey, "1");
+          } catch (e) {
+            // ignore storage errors
+            banner.style.display = "none";
+          }
+        }
+
+        // Initialize: hide if user previously closed
+        try {
+          if (localStorage.getItem(storageKey) === "1")
+            banner.style.display = "none";
+        } catch (e) {
+          /* ignore */
+        }
+
+        if (closeBtn) {
+          closeBtn.addEventListener("click", () => hideBanner(true));
+          closeBtn.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              hideBanner(true);
+            }
+          });
+        }
+      })();
     </script>
   </body>
 </html>
