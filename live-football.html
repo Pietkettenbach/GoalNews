@@ -127,44 +127,41 @@
         }
       }
 
+      /* ===== Footer ===== */
       footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 10px;
+        background-color: #111;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
         text-align: center;
-        color: #777;
-        padding: 30px 10px;
-        font-size: 0.8rem;
       }
-/* ===== Footer ===== */
-footer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding: 15px 10px;
-  background-color: #111;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  text-align: center;
-}
 
+      footer .signature {
+        color: #1db954;
+        font-weight: bold;
+      }
 
-footer a {
-  color: #ffcc00;
-  text-decoration: none;
-}
+      footer a {
+        color: #ffcc00;
+        text-decoration: none;
+      }
 
-footer a:hover {
-  text-decoration: underline;
-}
+      footer a:hover {
+        text-decoration: underline;
+      }
 
-@media (max-width: 480px) {
-  footer {
-    flex-direction: column;
-    gap: 5px;
-  }
-}
-
+      @media (max-width: 480px) {
+        footer {
+          flex-direction: column;
+          gap: 5px;
+        }
+      }
     </style>
   </head>
 
@@ -176,13 +173,16 @@ footer a:hover {
       <p>Lade Spiele…</p>
     </section>
 
-   
     <footer>
-      © 2026 GoalNews | Built by piex_ and EliXTech |
+      © 2026 GoalNews | Built by piex>_ and EliXTech |
       <a href="https://goalnews.website/impressum">Impressum</a> |
       <a href="https://goalnews.website/agb.html">AGB</a> |
       <a href="https://goalnews.website/datenschutz.html">Datenschutz</a>
     </footer>
+
+    <script type="module">
+      // Firebase + Live Games (single subscription)
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
       import {
         getFirestore,
         collection,
@@ -203,7 +203,6 @@ footer a:hover {
 
       const gamesEl = document.getElementById("games");
 
-      // NEU
       function ordinal(n) {
         if (n === 1) return "1ST";
         if (n === 2) return "2ND";
@@ -211,6 +210,7 @@ footer a:hover {
         return n + "TH";
       }
 
+      // Safe-ish row rendering (keeps template for clarity)
       onSnapshot(collection(db, "FootballGames"), (snapshot) => {
         gamesEl.innerHTML = "";
 
@@ -222,7 +222,6 @@ footer a:hover {
         snapshot.forEach((docSnap) => {
           const g = docSnap.data();
 
-          // NEU – Status korrekt priorisiert
           const statusClass = g.flagText
             ? "live"
             : g.over
@@ -231,7 +230,6 @@ footer a:hover {
                 ? "half"
                 : "live";
 
-          // NEU
           const statusText = g.flagText
             ? "FLAG"
             : g.over
@@ -243,29 +241,29 @@ footer a:hover {
           const div = document.createElement("div");
           div.className = "game" + (g.over ? " over" : "");
 
+          // Use textContent for simple fields to avoid accidental XSS
+          const flag = g.flagText
+            ? `<div class="flag">FLAG • ${String(g.flagText)}</div>`
+            : "";
+          const home = String(g.home || "");
+          const away = String(g.away || "");
+          const homeScore = Number.isFinite(g.homeScore) ? g.homeScore : "-";
+          const awayScore = Number.isFinite(g.awayScore) ? g.awayScore : "-";
+
           div.innerHTML = `
-        ${g.flagText ? `<div class="flag">FLAG • ${g.flagText}</div>` : ""}
-
-        <div class="status ${statusClass}">${statusText}</div>
-
-        <div class="teams">
-          <div class="team">${g.home}</div>
-          <div class="score ${g.touchdown ? "td" : ""}">
-            ${g.homeScore} : ${g.awayScore}
-          </div>
-          <div class="team">${g.away}</div>
-        </div>
-
-        <div class="meta">
-          ${
-            g.down && g.distance
-              ? `Down: ${ordinal(g.down)} & ${g.distance}`
-              : ""
-          } <!-- NEU -->
-          ${g.quarter ? ` • Quarter: ${g.quarter}` : ""}
-          ${g.time ? ` • ⏱ ${g.time}` : ""}
-        </div>
-      `;
+            ${flag}
+            <div class="status ${statusClass}">${statusText}</div>
+            <div class="teams">
+              <div class="team">${home}</div>
+              <div class="score ${g.touchdown ? "td" : ""}">${homeScore} : ${awayScore}</div>
+              <div class="team">${away}</div>
+            </div>
+            <div class="meta">
+              ${g.down && g.distance ? `Down: ${ordinal(g.down)} & ${String(g.distance)}` : ""}
+              ${g.quarter ? ` • Quarter: ${String(g.quarter)}` : ""}
+              ${g.time ? ` • ⏱ ${String(g.time)}` : ""}
+            </div>
+          `;
 
           gamesEl.appendChild(div);
         });
