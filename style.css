@@ -295,18 +295,19 @@ header,
 
 /* ===== Footer ===== */
 footer {
-  text-align: center;
-  padding: 25px;
-  background: #111;
-  font-size: 0.9rem;
-  color: #aaa;
-}
-.footer-links {
   display: flex;
-  gap: 6px;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 10px;
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  text-align: center;
 }
+
 footer a {
   color: #ffcc00;
   text-decoration: none;
@@ -316,6 +317,13 @@ footer a:hover {
   text-decoration: underline;
 }
 
+@media (max-width: 480px) {
+  footer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
 /* ===== Responsive ===== */
 @media (max-width: 700px) {
   .promo-inner {
