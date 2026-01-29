@@ -296,14 +296,14 @@ footer a:hover {
   }
 }
 
-/* Cookie Banner */
+/* ===== Cookie Banner ===== */
 .cookie-banner {
   position: fixed;
   left: 20px;
   right: 20px;
   bottom: 20px;
-  background: #141414;
-  border: 1px solid #1db954;
+  background: #141414; /* dunkler Hintergrund */
+  border: 2px solid #1db954; /* grüne Umrandung */
   border-radius: 14px;
   padding: 18px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
@@ -320,14 +320,23 @@ footer a:hover {
   color: #eee;
 }
 
+/* Inhalt */
 .cookie-content {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cookie-text {
+  max-width: 70%;
+  text-align: left;
 }
 
 .cookie-text strong {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  color: #1db954;
 }
 
 .cookie-text p {
@@ -341,10 +350,10 @@ footer a:hover {
   text-decoration: underline;
 }
 
+/* Buttons */
 .cookie-actions {
   display: flex;
   gap: 10px;
-  justify-content: flex-end;
 }
 
 .cookie-btn {
@@ -358,24 +367,25 @@ footer a:hover {
   border: none;
 }
 
+/* Akzeptieren */
 .cookie-btn.primary {
   background: #1db954;
   color: #000;
 }
-
 .cookie-btn.primary:hover {
   background: #14a34a;
 }
 
+/* Ablehnen */
 .cookie-btn.secondary {
   background: #2a2a2a;
   color: #fff;
 }
-
 .cookie-btn.secondary:hover {
   background: #3a3a3a;
 }
 
+/* ===== Mobile Anpassung ===== */
 @media (max-width: 480px) {
   .cookie-banner {
     left: 10px;
@@ -390,5 +400,8 @@ footer a:hover {
   .cookie-btn {
     width: 100%;
     text-align: center;
+  }
+  .cookie-text {
+    max-width: 100%;
   }
 }
