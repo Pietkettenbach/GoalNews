@@ -5,511 +5,485 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GoalNews - Foot- & Fußballnews</title>
 
+    <!-- Google Analytics 4 -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-C1HQFFK8NB"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-C1HQFFK8NB", { anonymize_ip: true });
+    </script>
+
     <!-- Favicon -->
     <link
       rel="icon"
       href="https://i.ibb.co/21R6p75W/Logo-1.jpg"
       type="image/jpeg"
     />
-    <link rel="stylesheet" href="style.beta.css" />
+    <link rel="stylesheet" href="style.css" />
 
     <!-- PWA -->
     <meta name="theme-color" content="#1db954" />
     <link rel="apple-touch-icon" href="https://i.ibb.co/21R6p75W/Logo-1.jpg" />
     <link rel="manifest" href="manifest.json" />
-  <style>
-/* ===== Reset & Base ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
 
-html,
-body {
-  height: 100%;
-}
+    <style>
+      /* ===== Main ===== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
 
-body {
-  background-color: #0f0f0f;
-  color: #eee;
-  overflow-x: hidden;
-  text-align: center;
-  line-height: 1.6;
-  margin: 0;
-  /* allow users to select/copy text (better UX) */
-  user-select: text;
-}
+      html,
+      body {
+        height: 100%;
+      }
 
-/* Links */
-a {
-  color: #1db954;
-  text-decoration: none;
-  transition: color 0.3s;
-}
+      body {
+        background-color: #0f0f0f;
+        color: #eee;
+        overflow-x: hidden;
+        text-align: center;
+        line-height: 1.6;
+        user-select: text;
+      }
 
-a:hover {
-  color: #14a34a;
-}
+      /* ===== Links & Hover ===== */
+      a {
+        color: #1db954;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      a:hover {
+        color: #14a34a;
+      }
 
-/* small helper for button variant */
-.gn-button--small {
-  padding: 8px 14px;
-  font-size: 0.95rem;
-}
+      /* ===== Buttons ===== */
+      .gn-button--small {
+        padding: 8px 14px;
+        font-size: 0.95rem;
+      }
 
-/* ===== Header / Navigation ===== */
-header,
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background: linear-gradient(90deg, #1db954, #14a34a);
-  color: white;
-  position: relative;
-  z-index: 100;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-}
+      /* HEADER */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background: linear-gradient(90deg, #1db954, #14a34a);
+        color: white;
+        position: relative;
+        z-index: 100;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+      }
 
-header .logo,
-.navbar .logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: white;
-}
+      /* LOGO */
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
 
-/* Hamburger */
-.menu-toggle {
-  display: none;
-}
+/* ===== Hamburger Button ===== */
+      #burger.menu {
+        --s: 36px;
+        --c: #1db970;
 
-.hamburger-icon {
-  display: flex !important;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 25px;
-  height: 18px;
-  cursor: pointer;
-  z-index: 101;
-}
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: var(--s);
+        height: var(--s);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 6px 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 101;
+      }
 
-.bar {
-  height: 3px;
-  width: 100%;
-  background: white;
-  border-radius: 2px;
-  transition: all 0.3s ease-in-out;
-}
+      #burger span {
+        display: block;
+        height: 4px;
+        width: 100%;
+        background: var(--c);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
 
-/* Off-canvas Menu */
-.nav-menu {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 70%;
-  height: 100%;
-  background-color: #111;
-  padding-top: 60px;
-  gap: 20px;
-  transition: right 0.3s ease-in-out;
-}
+      #burger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+      #burger.active span:nth-child(2) {
+        opacity: 0;
+      }
+      #burger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
 
-.nav-menu li {
-  text-align: center;
-}
+      #burger:focus-visible {
+        outline: 2px solid var(--c);
+        outline-offset: 4px;
+      }
 
-.nav-menu a {
-  color: #1db954;
+      /* ===== Side Menu ===== */
+      .side-menu {
+        position: fixed;
+        top: 0;
+        right: -280px;
+        width: 280px;
+        height: 100%;
+        background: #111;
+        padding-top: 80px;
+        transition: right 0.3s ease;
+        z-index: 100;
+      }
+
+      .side-menu.active {
+        right: 0;
+      }
+
+      .side-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .side-menu li {
+        text-align: center;
+        margin: 10px 0;
+      }
+
+      .side-menu a {
+  display: block;
+  color: #1db970; 
   font-size: 1.1rem;
+  text-decoration: none;
+  padding: 12px 0;
+  border-radius: 6px; 
+ 
 }
 
-#menu-toggle:checked ~ .nav-menu {
-  right: 0;
+/* Smooth Hover */
+.side-menu a:hover {
+  text-decoration: underline; 
 }
 
-/* Hamburger Animation */
-#menu-toggle:checked ~ .hamburger-icon .bar:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-#menu-toggle:checked ~ .hamburger-icon .bar:nth-child(2) {
-  opacity: 0;
-}
-#menu-toggle:checked ~ .hamburger-icon .bar:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
-}
+      /* ===== Breaking News / Marquee ===== */
+      #breakingNews {
+        background: #111;
+        overflow: hidden;
+        border-left: 4px solid #1db954;
+        height: 40px;
+        display: flex;
+        align-items: center;
+      }
+      .news-wrapper {
+        display: inline-flex;
+        white-space: nowrap;
+        animation: scrollNews 25s linear infinite;
+      }
+      .news-item {
+        padding: 0 50px;
+        font-weight: 600;
+        color: #1db954;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+      }
+      @keyframes scrollNews {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      #breakingNews:hover .news-wrapper {
+        animation-play-state: paused;
+      }
+      #breakingNews.locked::before {
+        content: "🔒 Breaking News gesperrt! Kaufe sie mit COINS";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #1db954;
+        font-weight: bold;
+        font-size: 1.2rem;
+        animation: lockSlide 2s infinite alternate;
+      }
+      #breakingNews.locked .news-wrapper {
+        display: none;
+      }
+      @keyframes lockSlide {
+        0% {
+          transform: translateX(-50%) translateY(0);
+          opacity: 0.6;
+        }
+        50% {
+          transform: translateX(-50%) translateY(-5px);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(-50%) translateY(0);
+          opacity: 0.6;
+        }
+      }
 
-/* ===== Promotional Banner (below header) ===== */
-.promo-banner {
-  width: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(29, 185, 84, 0.12),
-    rgba(29, 185, 84, 0.06)
-  );
-  border-bottom: 1px solid rgba(29, 185, 84, 0.12);
-  padding: 10px 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-.promo-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.promo-text {
-  text-align: left;
-}
-.promo-text strong {
-  color: #fff;
-  display: block;
-  font-size: 1rem;
-}
-.promo-sub {
-  color: #d6ffd6;
-  font-size: 0.85rem;
-  margin-top: 4px;
-}
-.promo-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.promo-close {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 6px 8px;
-  border-radius: 6px;
-}
-.promo-close:focus {
-  outline: 2px solid rgba(29, 185, 84, 0.9);
-}
+      /* ===== Countdown ===== */
+      .countdown-section,
+      #countdown {
+        color: #1db954;
+        text-align: center;
+        margin: 50px 0;
+      }
+      #countdown {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #fff;
+        letter-spacing: 2px;
+        font-family: "Courier New", monospace;
+      }
 
-@media (max-width: 700px) {
-  .promo-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .promo-actions {
-    width: 100%;
-    justify-content: space-between;
-  }
-}
+      /* ===== Matches ===== */
+      .matches {
+        padding: 30px 20px;
+        max-width: 950px;
+        margin: 40px auto;
+        background: #111;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      }
+      .matches h2 {
+        color: #1db954;
+        margin-bottom: 15px;
+      }
+      .topspiel {
+        color: #14a34a;
+        font-weight: bold;
+      }
 
-/* ===== Breaking News / Marquee ===== */
-#breakingNews {
-  background: #111;
-  overflow: hidden;
-  border-left: 4px solid #1db954;
-  height: 40px;
-  display: flex;
-  align-items: center;
-}
+      .matches-table {
+        width: 95%;
+        max-width: 1200px;
+        margin: 20px auto;
+        border-collapse: collapse;
+      }
+      .matches-table th,
+      .matches-table td {
+        border: 1px solid #444;
+        padding: 15px 20px;
+        text-align: center;
+        font-size: 1rem;
+      }
+      .matches-table th {
+        background: #1db954;
+        color: #000;
+      }
 
-.news-wrapper {
-  display: inline-flex;
-  white-space: nowrap;
-  animation: scrollNews 25s linear infinite;
-}
+      .goal-animation {
+        background: #66ff66;
+        color: #000;
+        font-weight: bold;
+        animation: pop 0.35s ease forwards;
+      }
+      @keyframes pop {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.5);
+        }
+        100% {
+          transform: scale(1.2);
+        }
+      }
 
-.news-item {
-  padding: 0 50px;
-  font-weight: 600;
-  color: #1db954;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  flex-shrink: 0;
-}
+      .over-game {
+        text-decoration: line-through;
+        opacity: 0.6;
+      }
 
-@keyframes scrollNews {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
+      /* ===== Footer ===== */
+      footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 10px;
+        background-color: rgba(0, 0, 0, 0);
+        color: #fff;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: center;
+      }
+      footer a {
+        color: #ffcc00;
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
 
-#breakingNews:hover .news-wrapper {
-  animation-play-state: paused;
-}
+      @media (max-width: 480px) {
+        footer {
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .news-wrapper {
+          animation-duration: 40s;
+        }
+      }
 
-#breakingNews.locked {
-  position: relative;
-  pointer-events: none;
-  height: 50px;
-  overflow: hidden;
-}
-#breakingNews.locked::before {
-  content: "🔒 Breaking News gesperrt! Kaufe sie mit COINS";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #1db954;
-  font-weight: bold;
-  font-size: 1.2rem;
-  animation: lockSlide 2s infinite alternate;
-}
-#breakingNews.locked .news-wrapper {
-  display: none;
-}
+      /* ===== Cookie Banner ===== */
+      .cookie-banner {
+        position: fixed;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        background: #141414;
+        border: 2px solid #1db954;
+        border-radius: 14px;
+        padding: 18px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        z-index: 9999;
+        display: none;
+        font-family:
+          "Poppins",
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          Arial,
+          sans-serif;
+        color: #eee;
+      }
+      .cookie-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .cookie-text {
+        max-width: 70%;
+        text-align: left;
+      }
+      .cookie-text strong {
+        font-size: 1.2rem;
+        color: #1db954;
+      }
+      .cookie-text p {
+        margin: 6px 0;
+        font-size: 0.95rem;
+        line-height: 1.4;
+      }
+      .cookie-text a {
+        color: #1db954;
+        text-decoration: underline;
+      }
+      .cookie-actions {
+        display: flex;
+        gap: 10px;
+      }
+      .cookie-btn {
+        border-radius: 8px;
+        padding: 10px 16px;
+        cursor: pointer;
+        font-weight: 600;
+        transition:
+          background 0.2s,
+          color 0.2s;
+        border: none;
+      }
+      .cookie-btn.primary {
+        background: #1db954;
+        color: #000;
+      }
+      .cookie-btn.primary:hover {
+        background: #14a34a;
+      }
+      .cookie-btn.secondary {
+        background: #2a2a2a;
+        color: #fff;
+      }
+      .cookie-btn.secondary:hover {
+        background: #3a3a3a;
+      }
 
-@keyframes lockSlide {
-  0% {
-    transform: translateX(-50%) translateY(0);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateX(-50%) translateY(-5px);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-50%) translateY(0);
-    opacity: 0.6;
-  }
-}
-
-/* ===== Countdown ===== */
-.countdown-section {
-  text-align: center;
-  margin: 50px 0;
-  color: #1db954;
-}
-.countdown-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  color: #1db954;
-}
-#countdown {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #fff;
-  letter-spacing: 2px;
-  font-family: "Courier New", monospace;
-}
-
-/* ===== Matches container ===== */
-.matches {
-  padding: 30px 20px;
-  max-width: 950px;
-  margin: auto;
-  background: #111;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-}
-.matches h2 {
-  color: #1db954;
-  margin-bottom: 15px;
-}
-.matches h3,
-.matches h4 {
-  margin-bottom: 10px;
-}
-.topspiel {
-  color: #14a34a;
-}
-
-/* Tabelle Live Spiele */
-.matches-table {
-  width: 95%;
-  max-width: 1200px;
-  margin: 20px auto;
-  border-collapse: collapse;
-}
-.matches-table th,
-.matches-table td {
-  border: 1px solid #444;
-  padding: 15px 20px;
-  text-align: center;
-  transition: all 0.5s ease;
-  position: relative;
-  font-size: 1rem;
-}
-.matches-table th {
-  background: #1db954;
-  color: #000;
-}
-
-.goal-animation {
-  background: #66ff66;
-  color: #000;
-  font-weight: bold;
-  transform: scale(1.05);
-  animation: pop 0.35s ease forwards;
-}
-.over-game {
-  text-decoration: line-through;
-  opacity: 0.6;
-  transition: all 0.5s ease;
-}
-@keyframes pop {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1.2);
-  }
-}
-
-#nextGameCountdown {
-  font-size: 1.5rem;
-  margin: 15px 0;
-  color: #1db954;
-}
-
-/* Halbzeit Label */
-.half-time-animation {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: rgba(29, 185, 84, 0.9);
-  color: #000;
-  font-weight: bold;
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  pointer-events: none;
-  animation: halftimePulse 1.5s infinite alternate;
-}
-@keyframes halftimePulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-}
-
-/* Uhr */
-.match-timer {
-  display: block;
-  margin-top: 8px;
-  font-size: 0.9rem;
-  color: #1db954;
-}
-
-/* VAR Kommentar */
-.var-comment {
-  display: block;
-  margin-top: 5px;
-  background: linear-gradient(135deg, #ffd700, #ffea70);
-  color: #000;
-  font-weight: bold;
-  padding: 4px 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  opacity: 0;
-  transform: translateY(20px) scale(0.8);
-  animation:
-    varCool 1.5s ease forwards,
-    varGlow 2s ease-in-out infinite alternate;
-  text-align: center;
-}
-@keyframes varCool {
-  0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.8);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(-5px) scale(1.1);
-  }
-  70% {
-    transform: translateY(0) scale(1);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-@keyframes varGlow {
-  0% {
-    box-shadow: 0 0 5px rgba(255, 223, 0, 0.6);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(255, 255, 200, 0.9);
-  }
-  100% {
-    box-shadow: 0 0 5px rgba(255, 223, 0, 0.6);
-  }
-}
-
-/* ===== Footer ===== */
-.footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-}
-
-.footer-copy {
-  line-height: 1.4;
-}
-
-.footer-links {
-  display: flex;
-  gap: 6px; /* nur zwischen Links */
-  margin: 0;
-  padding: 0;
-}
-
-
-/* ===== Accessibility & Reduced motion ===== */
-/* visible focus outlines for keyboard users */
-.hamburger-icon:focus,
-.hamburger-icon:focus-visible,
-.nav-menu a:focus,
-.nav-menu a:focus-visible,
-a:focus-visible {
-  outline: 3px solid rgba(29, 185, 84, 0.9);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .news-wrapper,
-  .goal-animation,
-  .var-comment,
-  .half-time-animation,
-  .hamburger-icon .bar {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
-/* Slower marquee on very small screens to improve readability */
-@media (max-width: 480px) {
-  .news-wrapper {
-    animation-duration: 40s;
-  }
-}
-
-
-  </style>
-  
+      @media (max-width: 480px) {
+        .cookie-banner {
+          left: 10px;
+          right: 10px;
+          bottom: 10px;
+          padding: 14px;
+        }
+        .cookie-actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .cookie-btn {
+          width: 100%;
+          text-align: center;
+        }
+        .cookie-text {
+          max-width: 100%;
+        }
+      }
+    </style>
   </head>
 
   <body>
-    <!-- Breaking News -->
+
+  
+
+    <!-- Header -->
+    <header>
+      <div class="logo">GoalNews</div>
+    </header>
+    
+      <!-- Hamburger -->
+      <button id="burger" class="menu" aria-label="Menü anzeigen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Side Menu -->
+      <nav id="sideMenu" class="side-menu">
+        <ul>
+          <li><a href="ueber_uns.html">About Us</a></li>
+        <li><a href="experten-tipp.html">Experten-Tipp</a></li>
+        <li><a href="live-football.html">Football Liveticker</a></li>
+        <li><a href="login.html">Login/Registrieren</a></li>
+        <li><a href="bundesliga.html">Bundesliga</a></li>
+        <li><a href="2liga.html">2. Bundesliga</a></li>
+        <li><a href="comments.html">Kommentar Forum</a></li>
+        <li><a href="feedback.html">Helfen Sie uns!</a></li>
+        <li><a href="coins.html">Was sind COINS</a></li>
+        <li><a href="download.html">Downloads/PDFs</a></li>
+        <li>
+          <a href="https://whatsapp.com/channel/0029Vb7PDwN8V0toB3ATWZ1Y"
+            >WhatsApp</a
+          >
+        </li>
+        <li><a href="https://www.youtube.com/@Goalnewsde">YouTube</a></li>
+        </ul>
+      </nav>
+    </header>
+
+<!-- Breaking News -->
     <div id="breakingNews" class="locked">
       <div class="news-wrapper">
         <span class="news-item">
@@ -534,89 +508,32 @@ a:focus-visible {
       </div>
     </div>
 
-    <!-- Header -->
-    <header class="navbar">
-      <div class="logo">GoalNews</div>
-      <input type="checkbox" id="menu-toggle" class="menu-toggle" />
-      <label for="menu-toggle" class="hamburger-icon">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-      </label>
-      <ul class="nav-menu">
-        <li><a href="über_uns.html">About Us</a></li>
-        <li><a href="experten-tipp.html">Experten-Tipp</a></li>
-        
-        <li><a href="login.html">Login/Registrieren</a></li>
-        <li><a href="bundesliga.html">Bundesliga</a></li>
-        <li><a href="2liga.html">2. Bundesliga</a></li>
-        <li><a href="comments.html">Kommentar Forum</a></li>
-        <li><a href="feedback.html">Helfen Sie uns!</a></li>
-        <li><a href="coins.html">Was sind COINS</a></li>
-        <li><a href="download.html">Downloads/PDFs</a></li>
-        <li>
-          <a href="https://whatsapp.com/channel/0029Vb7PDwN8V0toB3ATWZ1Y"
-            >WhatsApp</a
-          >
-        </li>
-        <li><a href="https://www.youtube.com/@Goalnewsde">YouTube</a></li>
-      </ul>
-    </header>
-
-    <!-- Promotional Banner (under navbar) -->
-    <div
-      id="promoBanner"
-      class="promo-banner"
-      role="region"
-      aria-label="Werbebanner"
-    >
-      <div class="promo-inner">
-        <div class="promo-text">
-          <strong>Jetzt Follower werden</strong>
-          <div class="promo-sub">
-            Aktuelle News und Liveticker auf dem WhatsApp-Kanal!
-          </div>
-        </div>
-        <div class="promo-actions">
-          <a
-            href="https://whatsapp.com/channel/0029Vb7PDwN8V0toB3ATWZ1Y"
-            class="gn-button gn-button--small"
-            >Jetzt Mitglied werden!</a
-          >
-          <button class="promo-close" aria-label="Banner schließen">✕</button>
-        </div>
-      </div>
-    </div>
-
-
     <!-- Countdown -->
-    <h2>⏱️ 20. Spieltag startet in:</h2>
+    <h2>⏱️ 21. Spieltag startet in:</h2>
     <div id="countdown">lade...</div>
 
     <!-- 🏆 Bundesliga Spieltag -->
     <div class="matches" style="text-align: center; margin-top: 40px">
-      <h2>🏆 Bundesliga-Spieltag 20</h2>
-      <h3>20. Spieltag (30.1.2026 - 1.2.2026)</h3>
+      <h2>🏆 Bundesliga-Spieltag 21</h2>
+      <h3>21. Spieltag (6.2.2026 - 8.2.2026)</h3>
       <div>
-        <h4>Freitag, 30.1.2026:</h4>
-      
-      </p>1.FC Köln 20:30 VfL Wolfsburg</p>
-        
-      <h4>Samstag, 31.1.2026:</h4>
+        <h4>Freitag, 6.2.2026:</h4>
+        <p>Union Berlin 20:30 Eintracht Frankfurt</p>
+        <h4>Samstag, 7.2.2026:</h4>
         <p>
-          Eintracht Frankfurt 15:30 Bayer Leverkusen <br />
-          FC Augsburg -15:30 FC St. Pauli<br />
-          RB Leipzig 15:30 FSV Mainz 05 <br />
-          TSG Hoffenheim 15:30 1. FC Union Berlin<br />
-          Werder Bremen 15:30 Bor. M'galdbach<br />
-          <strong class="topspiel">
-            Topspiel: Hamburger SV 18:30 Bayern München
-          </strong>
+          SC Freiburg 15:30 Werder Bremen<br />
+          FSV Mainz 05 15:30 FC Augsburg<br />
+          VfL Wolfsburg 15:30 Bor. Dortmund<br />
+          FC St. Pauli 15:30 VfB Stuttgart<br />
+          FC Heidenheim 15:30 Hamburger SV<br />
+          <strong class="topspiel"
+            >Topspiel: Bor. M'gladbach 18:30 Bayer Leverkusen</strong
+          >
         </p>
-        <h4>Sonntag, 1.2.2026:</h4>
+        <h4>Sonntag, 8.2.2026:</h4>
         <p>
-          VfB Stuttgart 15:30 SC Freiburg<br />
-          Bor. Dortmund 17:30 1. FC Heidenheim
+          1. FC Köln 15:30 RB Leipzig<br />
+          Bayern München 17:30 TSG Hoffenheim<br />
         </p>
       </div>
     </div>
@@ -646,49 +563,50 @@ a:focus-visible {
       </table>
     </section>
 
-    <!-- Footer -->
-  <footer class="footer">
-  <span class="footer-copy">
-    © 2025 GoalNews | Built by piex_ and EliXTech
-  </span>
-  <nav class="footer-links">
-    <a href="/impressum">Impressum</a> |
-    <a href="/agb.html">AGB</a> |
-    <a href="/datenschutz.html">Datenschutz</a>
-  </nav>
-</footer>
+    <!-- Footer bleibt unverändert -->
+    <footer class="footer">
+      <span class="footer-copy"
+        >© 2026 GoalNews | Built by piex_ and EliXTech</span
+      >
+      <nav class="footer-links">
+        <a href="impressum.html">Impressum</a> | <a href="agb.html">AGB</a> |
+        <a href="datenschutz.html">Datenschutz</a>
+      </nav>
+    </footer>
+
     <!-- Scripts -->
     <script>
-      // Countdown
-      const countdownEl = document.getElementById("countdown");
-      const targetDate = new Date("2026-1-30 20:30:00");
-      function updateCountdown() {
-        const now = new Date();
-        let diff = targetDate - now;
-        if (diff <= 0) {
-          countdownEl.textContent = "läuft!";
-          return;
+      // Countdown — updates every second
+      (function () {
+        const countdownEl = document.getElementById("countdown");
+        const targetDate = new Date("2026-02-08T20:30:00");
+        function updateCountdown() {
+          const now = new Date();
+          let diff = targetDate - now;
+          if (diff <= 0) {
+            countdownEl.textContent = "läuft!";
+            return;
+          }
+          const days = Math.floor(diff / 86400000);
+          diff %= 86400000;
+          const hours = Math.floor(diff / 3600000);
+          diff %= 3600000;
+          const minutes = Math.floor(diff / 60000);
+          const seconds = Math.floor((diff % 60000) / 1000);
+          const parts = [];
+          if (days) parts.push(days + "d");
+          if (hours) parts.push(hours + "h");
+          if (minutes) parts.push(minutes + "m");
+          parts.push(seconds + "s");
+          countdownEl.textContent = parts.join(" ");
         }
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        diff %= 1000 * 60 * 60 * 24;
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        diff %= 1000 * 60 * 60;
-        const minutes = Math.floor(diff / (1000 * 60));
-        diff %= 1000 * 60;
-        const seconds = Math.floor(diff / 1000);
-        const parts = [];
-        if (days > 0) parts.push(`${days}d`);
-        if (hours > 0) parts.push(`${hours}h`);
-        if (minutes > 0) parts.push(`${minutes}m`);
-        parts.push(`${seconds}s`);
-        countdownEl.textContent = parts.join(" ");
-      }
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      })();
     </script>
 
     <script type="module">
-      // Firebase + Live Games
+      // Firebase initialization and live games subscription
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
       import {
         getFirestore,
@@ -717,20 +635,19 @@ a:focus-visible {
       const auth = getAuth(app);
       setPersistence(auth, browserLocalPersistence);
 
+      // Maintenance redirect
       function watchMaintenance() {
         const docRef = doc(db, "settings", "main");
         onSnapshot(docRef, (snap) => {
-          if (snap.exists()) {
-            const data = snap.data();
-            if (data.maintenance === true)
-              window.location.href = "wartungsarbeiten.html";
-          } else {
-            console.error("❌ Einstellungen nicht gefunden");
-          }
+          if (!snap.exists())
+            return console.error("Einstellungen nicht gefunden");
+          const data = snap.data();
+          if (data.maintenance) window.location.href = "wartungsarbeiten.html";
         });
       }
       watchMaintenance();
 
+      // Breaking news toggle
       const breakingEl = document.getElementById("breakingNews");
       onAuthStateChanged(auth, (user) => {
         if (!user) {
@@ -739,14 +656,12 @@ a:focus-visible {
         }
         const userRef = doc(db, "users", user.uid);
         onSnapshot(userRef, (snap) => {
-          const data = snap.data();
-          if (data && data.breakingNews === true)
-            breakingEl.classList.remove("locked");
-          else breakingEl.classList.add("locked");
+          const data = snap.data() || {};
+          breakingEl.classList.toggle("locked", !data.breakingNews);
         });
       });
 
-      // Live Games
+      // Live games rendering
       const tableBody = document.getElementById("tableBody");
       const matchTimers = new Map();
 
@@ -758,38 +673,31 @@ a:focus-visible {
           td.appendChild(overlay);
         }
       }
-
       function removeHalfTimeAnimation(td) {
         const overlay = td.querySelector(".half-time-animation");
         if (overlay) overlay.remove();
       }
-
       function formatTime(ms) {
-        const totalSeconds = Math.floor(ms / 1000);
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
-        return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+        const s = Math.floor(ms / 1000);
+        return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
       }
 
       function startMatchTimer(id, td, startTime, halfTime) {
         if (matchTimers.has(id)) clearInterval(matchTimers.get(id));
-        let paused = halfTime;
+        let paused = !!halfTime;
         const timerEl = document.createElement("span");
         timerEl.className = "match-timer";
         td.appendChild(timerEl);
-
         const interval = setInterval(() => {
           if (!paused) {
             const elapsed = Date.now() - startTime;
-            if (elapsed < 90 * 60 * 1000)
-              timerEl.textContent = `⏱️ ${formatTime(elapsed)}`;
-            else {
-              timerEl.textContent = "🕛 90:00";
-              clearInterval(interval);
-            }
+            timerEl.textContent =
+              elapsed < 90 * 60 * 1000
+                ? `⏱️ ${formatTime(elapsed)}`
+                : "🕛 90:00";
+            if (elapsed >= 90 * 60 * 1000) clearInterval(interval);
           } else timerEl.textContent = "⏸️ Halbzeit";
         }, 1000);
-
         matchTimers.set(id, interval);
       }
 
@@ -805,13 +713,13 @@ a:focus-visible {
         setTimeout(() => (varDiv.style.opacity = 0), 5000);
       }
 
-      async function initLiveGames() {
+      function initLiveGames() {
         const colRef = collection(db, "liveGames");
         onSnapshot(colRef, (snapshot) => {
           tableBody.innerHTML = "";
           if (snapshot.empty) {
             tableBody.innerHTML =
-              "<tr><td colspan='3'>Keine aktuellen Spiele</td></tr>";
+              '<tr><td colspan="3">Keine aktuellen Spiele</td></tr>';
             return;
           }
           snapshot.forEach((docSnap) => {
@@ -819,16 +727,9 @@ a:focus-visible {
             if (docSnap.id === "next_game") return;
             const tr = document.createElement("tr");
             tr.innerHTML = `
-              <td class="${data.over ? "over-game" : ""}">${
-                data.home || ""
-              }</td>
-              <td class="${data.over ? "over-game" : ""}">${
-                data.away || ""
-              }</td>
-              <td class="${data.goal ? "goal-animation" : ""} ${
-                data.over ? "over-game" : ""
-              }">${data.score || ""}</td>
-            `;
+          <td class="${data.over ? "over-game" : ""}">${data.home || ""}</td>
+          <td class="${data.over ? "over-game" : ""}">${data.away || ""}</td>
+          <td class="${data.goal ? "goal-animation" : ""} ${data.over ? "over-game" : ""}">${data.score || ""}</td>`;
             tableBody.appendChild(tr);
             const td = tr.querySelector("td:nth-child(3)");
             if (data.halfTime) addHalfTimeAnimation(td);
@@ -846,32 +747,26 @@ a:focus-visible {
       }
       initLiveGames();
     </script>
+
     <script>
-      // Promo banner: close and persist state in localStorage (placed before closing body)
+      // Promo banner (persist close state)
       (function () {
         const banner = document.getElementById("promoBanner");
         if (!banner) return;
         const closeBtn = banner.querySelector(".promo-close");
         const storageKey = "promoBannerClosed_v1";
-
         function hideBanner(save) {
           try {
             banner.style.display = "none";
             if (save) localStorage.setItem(storageKey, "1");
           } catch (e) {
-            // ignore storage errors
             banner.style.display = "none";
           }
         }
-
-        // Initialize: hide if user previously closed
         try {
           if (localStorage.getItem(storageKey) === "1")
             banner.style.display = "none";
-        } catch (e) {
-          /* ignore */
-        }
-
+        } catch (e) {}
         if (closeBtn) {
           closeBtn.addEventListener("click", () => hideBanner(true));
           closeBtn.addEventListener("keydown", (e) => {
@@ -882,6 +777,62 @@ a:focus-visible {
           });
         }
       })();
+    </script>
+
+    <script>
+      // Cookie consent & analytics loader
+      (function () {
+        const COOKIE_KEY = "cookieConsent_v1";
+
+        function loadGoogleAnalytics() {
+          if (window.gtagLoaded) return;
+          window.gtagLoaded = true;
+          const script = document.createElement("script");
+          script.async = true;
+          script.src =
+            "https://www.googletagmanager.com/gtag/js?id=G-C1HQFFK8NB";
+          document.head.appendChild(script);
+          script.onload = () => {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", "G-C1HQFFK8NB", { anonymize_ip: true });
+          };
+        }
+
+        function initCookieBanner() {
+          const banner = document.getElementById("cookieBanner");
+          const acceptBtn = document.getElementById("cookieAccept");
+          const declineBtn = document.getElementById("cookieDecline");
+          if (!banner || !acceptBtn || !declineBtn) return;
+
+          const consent = localStorage.getItem(COOKIE_KEY);
+          if (!consent) banner.style.display = "block";
+          else if (consent === "accepted") loadGoogleAnalytics();
+
+          acceptBtn.addEventListener("click", () => {
+            localStorage.setItem(COOKIE_KEY, "accepted");
+            banner.style.display = "none";
+            loadGoogleAnalytics();
+          });
+          declineBtn.addEventListener("click", () => {
+            localStorage.setItem(COOKIE_KEY, "declined");
+            banner.style.display = "none";
+          });
+        }
+
+        document.addEventListener("DOMContentLoaded", initCookieBanner);
+      })();
+
+      const burger = document.getElementById("burger");
+      const sideMenu = document.getElementById("sideMenu");
+
+      burger.addEventListener("click", () => {
+        burger.classList.toggle("active");
+        sideMenu.classList.toggle("active");
+      });
     </script>
   </body>
 </html>
