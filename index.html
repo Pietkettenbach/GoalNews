@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GoalNews - Foot- & Fußballnews</title>
 
- <!-- Google Analytics 4 -->
- <script async src="https://www.googletagmanager.com/gtag/js?id=G-C1HQFFK8NB"></script>
- <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-C1HQFFK8NB', { 'anonymize_ip': true });
-</script>
+    <!-- Google Analytics 4 -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-C1HQFFK8NB"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-C1HQFFK8NB", { anonymize_ip: true });
+    </script>
 
     <!-- Favicon -->
     <link
@@ -30,11 +34,39 @@
   </head>
 
   <body>
+    <!-- Header -->
+    <header>
+      <div class="logo">GoalNews</div>
 
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKFR3S7V"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+      <!-- Hamburger -->
+      <button id="burger" class="menu" aria-label="Menü anzeigen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Side Menu -->
+      <nav id="sideMenu" class="side-menu">
+        <ul>
+          <li><a href="ueber_uns.html">About Us</a></li>
+          <li><a href="experten-tipp.html">Experten-Tipp</a></li>
+          <li><a href="live-football.html">Football Liveticker</a></li>
+          <li><a href="login.html">Login/Registrieren</a></li>
+          <li><a href="bundesliga.html">Bundesliga</a></li>
+          <li><a href="2liga.html">2. Bundesliga</a></li>
+          <li><a href="comments.html">Kommentar Forum</a></li>
+          <li><a href="feedback.html">Helfen Sie uns!</a></li>
+          <li><a href="coins.html">Was sind COINS</a></li>
+          <li><a href="download.html">Downloads/PDFs</a></li>
+          <li>
+            <a href="https://whatsapp.com/channel/0029Vb7PDwN8V0toB3ATWZ1Y"
+              >WhatsApp</a
+            >
+          </li>
+          <li><a href="https://www.youtube.com/@Goalnewsde">YouTube</a></li>
+        </ul>
+      </nav>
+    </header>
 
     <!-- Breaking News -->
     <div id="breakingNews" class="locked">
@@ -61,85 +93,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <!-- Header -->
-    <header class="navbar">
-      <div class="logo">GoalNews</div>
-      <input type="checkbox" id="menu-toggle" class="menu-toggle" />
-      <label for="menu-toggle" class="hamburger-icon">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-      </label>
-      <ul class="nav-menu">
-        <li><a href="ueber_uns.html">About Us</a></li>
-        <li><a href="experten-tipp.html">Experten-Tipp</a></li>
-        <li><a href="live-football.html">Football Liveticker</a></li>
-        <li><a href="login.html">Login/Registrieren</a></li>
-        <li><a href="bundesliga.html">Bundesliga</a></li>
-        <li><a href="2liga.html">2. Bundesliga</a></li>
-        <li><a href="comments.html">Kommentar Forum</a></li>
-        <li><a href="feedback.html">Helfen Sie uns!</a></li>
-        <li><a href="coins.html">Was sind COINS</a></li>
-        <li><a href="download.html">Downloads/PDFs</a></li>
-        <li>
-          <a href="https://whatsapp.com/channel/0029Vb7PDwN8V0toB3ATWZ1Y"
-            >WhatsApp</a
-          >
-        </li>
-        <li><a href="https://www.youtube.com/@Goalnewsde">YouTube</a></li>
-      </ul>
-    </header>
-
-    <div
-  id="cookieBanner"
-  class="cookie-banner"
-  role="dialog"
-  aria-live="polite"
-  aria-label="Cookie Banner"
->
-  <div class="cookie-content">
-    <div class="cookie-text">
-      <strong>Cookies & Datenschutz</strong>
-      <p>
-        Wir nutzen Cookies, um unsere Website zu verbessern und
-        anonymisierte Statistiken zu erfassen. Du entscheidest selbst.
-      </p>
-      <a href="datenschutz.html">Mehr erfahren</a>
-    </div>
-    <div class="cookie-actions">
-      <button id="cookieDecline" class="cookie-btn secondary">
-        Ablehnen
-      </button>
-      <button id="cookieAccept" class="cookie-btn primary">
-        Akzeptieren
-      </button>
-    </div>
-  </div>
-</div>
-
     <!-- Countdown -->
     <h2>⏱️ 21. Spieltag startet in:</h2>
     <div id="countdown">lade...</div>
 
-    <!-- 🏆 Bundesliga Spieltag -->
+    <!-- Bundesliga Spieltag -->
     <div class="matches" style="text-align: center; margin-top: 40px">
       <h2>🏆 Bundesliga-Spieltag 21</h2>
       <h3>21. Spieltag (6.2.2026 - 8.2.2026)</h3>
       <div>
         <h4>Freitag, 6.2.2026:</h4>
-      
-      </p>Union Berlin 20:30 Eintracht Frankfurt</p>
-        
-      <h4>Samstag, 7.2.2026:</h4>
+        <p>Union Berlin 20:30 Eintracht Frankfurt</p>
+        <h4>Samstag, 7.2.2026:</h4>
         <p>
           SC Freiburg 15:30 Werder Bremen<br />
           FSV Mainz 05 15:30 FC Augsburg<br />
           VfL Wolfsburg 15:30 Bor. Dortmund<br />
           FC St. Pauli 15:30 VfB Stuttgart<br />
           FC Heidenheim 15:30 Hamburger SV<br />
-          <strong class="topspiel">
-            Topspiel: Bor. M'gladbach 18:30 Bayer Leverkusen
-          </strong>
+          <strong class="topspiel"
+            >Topspiel: Bor. M'gladbach 18:30 Bayer Leverkusen</strong
+          >
         </p>
         <h4>Sonntag, 8.2.2026:</h4>
         <p>
@@ -174,253 +148,277 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </table>
     </section>
 
+    <!-- Footer -->
     <footer class="footer">
-  <span class="footer-copy">
-    © 2026 GoalNews | Built by piex_ and EliXTech
-  </span>
-  <nav class="footer-links">
-    <a href="impressum.html">Impressum</a> |
-    <a href="agb.html">AGB</a> |
-    <a href="datenschutz.html">Datenschutz</a>
-  </nav>
-</footer>
+      <span class="footer-copy"
+        >© 2026 GoalNews | Built by piex_ and EliXTech</span
+      >
+      <nav class="footer-links">
+        <a href="impressum.html">Impressum</a> | <a href="agb.html">AGB</a> |
+        <a href="datenschutz.html">Datenschutz</a>
+      </nav>
+    </footer>
 
     <!-- Scripts -->
+
+    <!-- Countdown Script -->
     <script>
-  // Countdown — updates every second
-  (function () {
-    const countdownEl = document.getElementById("countdown");
-    const targetDate = new Date("2026-02-08T20:30:00");
-    function updateCountdown() {
-      const now = new Date();
-      let diff = targetDate - now;
-      if (diff <= 0) {
-        countdownEl.textContent = "läuft!";
-        return;
-      }
-      const days = Math.floor(diff / 86400000);
-      diff %= 86400000;
-      const hours = Math.floor(diff / 3600000);
-      diff %= 3600000;
-      const minutes = Math.floor(diff / 60000);
-      const seconds = Math.floor((diff % 60000) / 1000);
-      const parts = [];
-      if (days) parts.push(days + "d");
-      if (hours) parts.push(hours + "h");
-      if (minutes) parts.push(minutes + "m");
-      parts.push(seconds + "s");
-      countdownEl.textContent = parts.join(" ");
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  })();
-</script>
-
-<script type="module">
-  // Firebase initialization and live games subscription
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-  import { getFirestore, collection, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-  import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBmIcdFtxv4jBJKdiAkEiwnkQ8yRwiG_0w",
-    authDomain: "goalnewsde-community.firebaseapp.com",
-    projectId: "goalnewsde-community",
-    storageBucket: "goalnewsde-community.firebasestorage.app",
-    messagingSenderId: "134523022055",
-    appId: "1:134523022055:web:4f35ed7812d06e4fb55042",
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-  setPersistence(auth, browserLocalPersistence);
-
-  // Maintenance redirect
-  function watchMaintenance() {
-    const docRef = doc(db, "settings", "main");
-    onSnapshot(docRef, (snap) => {
-      if (!snap.exists()) return console.error("Einstellungen nicht gefunden");
-      const data = snap.data();
-      if (data.maintenance) window.location.href = "wartungsarbeiten.html";
-    });
-  }
-  watchMaintenance();
-
-  // Breaking news toggle
-  const breakingEl = document.getElementById("breakingNews");
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      breakingEl.classList.add("locked");
-      return;
-    }
-    const userRef = doc(db, "users", user.uid);
-    onSnapshot(userRef, (snap) => {
-      const data = snap.data() || {};
-      breakingEl.classList.toggle("locked", !data.breakingNews);
-    });
-  });
-
-  // Live games rendering
-  const tableBody = document.getElementById("tableBody");
-  const matchTimers = new Map();
-
-  function addHalfTimeAnimation(td) {
-    if (!td.querySelector(".half-time-animation")) {
-      const overlay = document.createElement("div");
-      overlay.className = "half-time-animation";
-      overlay.textContent = "Halbzeit!";
-      td.appendChild(overlay);
-    }
-  }
-  function removeHalfTimeAnimation(td) {
-    const overlay = td.querySelector(".half-time-animation");
-    if (overlay) overlay.remove();
-  }
-  function formatTime(ms) {
-    const s = Math.floor(ms / 1000);
-    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
-  }
-
-  function startMatchTimer(id, td, startTime, halfTime) {
-    if (matchTimers.has(id)) clearInterval(matchTimers.get(id));
-    let paused = !!halfTime;
-    const timerEl = document.createElement("span");
-    timerEl.className = "match-timer";
-    td.appendChild(timerEl);
-    const interval = setInterval(() => {
-      if (!paused) {
-        const elapsed = Date.now() - startTime;
-        timerEl.textContent =
-          elapsed < 90 * 60 * 1000
-            ? `⏱️ ${formatTime(elapsed)}`
-            : "🕛 90:00";
-        if (elapsed >= 90 * 60 * 1000) clearInterval(interval);
-      } else timerEl.textContent = "⏸️ Halbzeit";
-    }, 1000);
-    matchTimers.set(id, interval);
-  }
-
-  function showVARComment(td, comment) {
-    let varDiv = td.querySelector(".var-comment");
-    if (!varDiv) {
-      varDiv = document.createElement("span");
-      varDiv.className = "var-comment";
-      td.appendChild(varDiv);
-    }
-    varDiv.textContent = comment;
-    varDiv.style.opacity = 1;
-    setTimeout(() => (varDiv.style.opacity = 0), 5000);
-  }
-
-  function initLiveGames() {
-    const colRef = collection(db, "liveGames");
-    onSnapshot(colRef, (snapshot) => {
-      tableBody.innerHTML = "";
-      if (snapshot.empty) {
-        tableBody.innerHTML = '<tr><td colspan="3">Keine aktuellen Spiele</td></tr>';
-        return;
-      }
-      snapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        if (docSnap.id === "next_game") return;
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td class="${data.over ? "over-game" : ""}">${data.home || ""}</td>
-          <td class="${data.over ? "over-game" : ""}">${data.away || ""}</td>
-          <td class="${data.goal ? "goal-animation" : ""} ${data.over ? "over-game" : ""}">${data.score || ""}</td>`;
-        tableBody.appendChild(tr);
-        const td = tr.querySelector("td:nth-child(3)");
-        if (data.halfTime) addHalfTimeAnimation(td);
-        else removeHalfTimeAnimation(td);
-        if (data.startTime)
-          startMatchTimer(
-            docSnap.id,
-            td,
-            data.startTime.toDate().getTime(),
-            data.halfTime,
-          );
-        if (data.varComment) showVARComment(td, data.varComment);
-      });
-    });
-  }
-  initLiveGames();
-</script>
-
-<script>
-  // Promo banner (persist close state)
-  (function () {
-    const banner = document.getElementById("promoBanner");
-    if (!banner) return;
-    const closeBtn = banner.querySelector(".promo-close");
-    const storageKey = "promoBannerClosed_v1";
-    function hideBanner(save) {
-      try {
-        banner.style.display = "none";
-        if (save) localStorage.setItem(storageKey, "1");
-      } catch (e) {
-        banner.style.display = "none";
-      }
-    }
-    try {
-      if (localStorage.getItem(storageKey) === "1") banner.style.display = "none";
-    } catch (e) {}
-    if (closeBtn) {
-      closeBtn.addEventListener("click", () => hideBanner(true));
-      closeBtn.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          hideBanner(true);
+      (function () {
+        const countdownEl = document.getElementById("countdown");
+        const targetDate = new Date("2026-02-08T20:30:00");
+        function updateCountdown() {
+          const now = new Date();
+          let diff = targetDate - now;
+          if (diff <= 0) {
+            countdownEl.textContent = "läuft!";
+            return;
+          }
+          const days = Math.floor(diff / 86400000);
+          diff %= 86400000;
+          const hours = Math.floor(diff / 3600000);
+          diff %= 3600000;
+          const minutes = Math.floor(diff / 60000);
+          const seconds = Math.floor((diff % 60000) / 1000);
+          const parts = [];
+          if (days) parts.push(days + "d");
+          if (hours) parts.push(hours + "h");
+          if (minutes) parts.push(minutes + "m");
+          parts.push(seconds + "s");
+          countdownEl.textContent = parts.join(" ");
         }
-      });
-    }
-  })();
-</script>
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      })();
+    </script>
 
-<script>
-  // Cookie consent & analytics loader
-  (function () {
-    const COOKIE_KEY = "cookieConsent_v1";
+    <!-- Firebase & Live Games Script -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        doc,
+        onSnapshot,
+      } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        setPersistence,
+        browserLocalPersistence,
+      } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
-    function loadGoogleAnalytics() {
-      if (window.gtagLoaded) return;
-      window.gtagLoaded = true;
-      const script = document.createElement("script");
-      script.async = true;
-      script.src =
-        "https://www.googletagmanager.com/gtag/js?id=G-C1HQFFK8NB";
-      document.head.appendChild(script);
-      script.onload = () => {
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag("js", new Date());
-        gtag("config", "G-C1HQFFK8NB", { anonymize_ip: true });
+      const firebaseConfig = {
+        apiKey: "AIzaSyBmIcdFtxv4jBJKdiAkEiwnkQ8yRwiG_0w",
+        authDomain: "goalnewsde-community.firebaseapp.com",
+        projectId: "goalnewsde-community",
+        storageBucket: "goalnewsde-community.firebasestorage.app",
+        messagingSenderId: "134523022055",
+        appId: "1:134523022055:web:4f35ed7812d06e4fb55042",
       };
-    }
 
-    function initCookieBanner() {
-      const banner = document.getElementById("cookieBanner");
-      const acceptBtn = document.getElementById("cookieAccept");
-      const declineBtn = document.getElementById("cookieDecline");
-      if (!banner || !acceptBtn || !declineBtn) return;
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      const auth = getAuth(app);
+      setPersistence(auth, browserLocalPersistence);
 
-      const consent = localStorage.getItem(COOKIE_KEY);
-      if (!consent) banner.style.display = "block";
-      else if (consent === "accepted") loadGoogleAnalytics();
+      // Maintenance redirect
+      function watchMaintenance() {
+        const docRef = doc(db, "settings", "main");
+        onSnapshot(docRef, (snap) => {
+          if (!snap.exists())
+            return console.error("Einstellungen nicht gefunden");
+          const data = snap.data();
+          if (data.maintenance) window.location.href = "wartungsarbeiten.html";
+        });
+      }
+      watchMaintenance();
 
-      acceptBtn.addEventListener("click", () => {
-        localStorage.setItem(COOKIE_KEY, "accepted");
-        banner.style.display = "none";
-        loadGoogleAnalytics();
+      // Breaking news toggle
+      const breakingEl = document.getElementById("breakingNews");
+      onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          breakingEl.classList.add("locked");
+          return;
+        }
+        const userRef = doc(db, "users", user.uid);
+        onSnapshot(userRef, (snap) => {
+          const data = snap.data() || {};
+          breakingEl.classList.toggle("locked", !data.breakingNews);
+        });
       });
-      declineBtn.addEventListener("click", () => {
-        localStorage.setItem(COOKIE_KEY, "declined");
-        banner.style.display = "none";
-      });
-    }
 
-    document.addEventListener("DOMContentLoaded", initCookieBanner);
-  })();
-</script>
+      // Live games rendering
+      const tableBody = document.getElementById("tableBody");
+      const matchTimers = new Map();
+
+      function addHalfTimeAnimation(td) {
+        if (!td.querySelector(".half-time-animation")) {
+          const overlay = document.createElement("div");
+          overlay.className = "half-time-animation";
+          overlay.textContent = "Halbzeit!";
+          td.appendChild(overlay);
+        }
+      }
+      function removeHalfTimeAnimation(td) {
+        const overlay = td.querySelector(".half-time-animation");
+        if (overlay) overlay.remove();
+      }
+      function formatTime(ms) {
+        const s = Math.floor(ms / 1000);
+        return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+      }
+
+      function startMatchTimer(id, td, startTime, halfTime) {
+        if (matchTimers.has(id)) clearInterval(matchTimers.get(id));
+        let paused = !!halfTime;
+        const timerEl = document.createElement("span");
+        timerEl.className = "match-timer";
+        td.appendChild(timerEl);
+        const interval = setInterval(() => {
+          if (!paused) {
+            const elapsed = Date.now() - startTime;
+            timerEl.textContent =
+              elapsed < 90 * 60 * 1000
+                ? `⏱️ ${formatTime(elapsed)}`
+                : "🕛 90:00";
+            if (elapsed >= 90 * 60 * 1000) clearInterval(interval);
+          } else timerEl.textContent = "⏸️ Halbzeit";
+        }, 1000);
+        matchTimers.set(id, interval);
+      }
+
+      function showVARComment(td, comment) {
+        let varDiv = td.querySelector(".var-comment");
+        if (!varDiv) {
+          varDiv = document.createElement("span");
+          varDiv.className = "var-comment";
+          td.appendChild(varDiv);
+        }
+        varDiv.textContent = comment;
+        varDiv.style.opacity = 1;
+        setTimeout(() => (varDiv.style.opacity = 0), 5000);
+      }
+
+      function initLiveGames() {
+        const colRef = collection(db, "liveGames");
+        onSnapshot(colRef, (snapshot) => {
+          tableBody.innerHTML = "";
+          if (snapshot.empty) {
+            tableBody.innerHTML =
+              '<tr><td colspan="3">Keine aktuellen Spiele</td></tr>';
+            return;
+          }
+          snapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            if (docSnap.id === "next_game") return;
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td class="${data.over ? "over-game" : ""}">${data.home || ""}</td>
+              <td class="${data.over ? "over-game" : ""}">${data.away || ""}</td>
+              <td class="${data.goal ? "goal-animation" : ""} ${data.over ? "over-game" : ""}">${data.score || ""}</td>`;
+            tableBody.appendChild(tr);
+            const td = tr.querySelector("td:nth-child(3)");
+            if (data.halfTime) addHalfTimeAnimation(td);
+            else removeHalfTimeAnimation(td);
+            if (data.startTime)
+              startMatchTimer(
+                docSnap.id,
+                td,
+                data.startTime.toDate().getTime(),
+                data.halfTime,
+              );
+            if (data.varComment) showVARComment(td, data.varComment);
+          });
+        });
+      }
+      initLiveGames();
+    </script>
+
+    <!-- Promo Banner Script -->
+    <script>
+      (function () {
+        const banner = document.getElementById("promoBanner");
+        if (!banner) return;
+        const closeBtn = banner.querySelector(".promo-close");
+        const storageKey = "promoBannerClosed_v1";
+        function hideBanner(save) {
+          try {
+            banner.style.display = "none";
+            if (save) localStorage.setItem(storageKey, "1");
+          } catch (e) {
+            banner.style.display = "none";
+          }
+        }
+        try {
+          if (localStorage.getItem(storageKey) === "1")
+            banner.style.display = "none";
+        } catch (e) {}
+        if (closeBtn) {
+          closeBtn.addEventListener("click", () => hideBanner(true));
+          closeBtn.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              hideBanner(true);
+            }
+          });
+        }
+      })();
+    </script>
+
+    <!-- Cookie Consent Script -->
+    <script>
+      (function () {
+        const COOKIE_KEY = "cookieConsent_v1";
+
+        function loadGoogleAnalytics() {
+          if (window.gtagLoaded) return;
+          window.gtagLoaded = true;
+          const script = document.createElement("script");
+          script.async = true;
+          script.src =
+            "https://www.googletagmanager.com/gtag/js?id=G-C1HQFFK8NB";
+          document.head.appendChild(script);
+          script.onload = () => {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", "G-C1HQFFK8NB", { anonymize_ip: true });
+          };
+        }
+
+        function initCookieBanner() {
+          const banner = document.getElementById("cookieBanner");
+          const acceptBtn = document.getElementById("cookieAccept");
+          const declineBtn = document.getElementById("cookieDecline");
+          if (!banner || !acceptBtn || !declineBtn) return;
+
+          const consent = localStorage.getItem(COOKIE_KEY);
+          if (!consent) banner.style.display = "block";
+          else if (consent === "accepted") loadGoogleAnalytics();
+
+          acceptBtn.addEventListener("click", () => {
+            localStorage.setItem(COOKIE_KEY, "accepted");
+            banner.style.display = "none";
+            loadGoogleAnalytics();
+          });
+          declineBtn.addEventListener("click", () => {
+            localStorage.setItem(COOKIE_KEY, "declined");
+            banner.style.display = "none";
+          });
+        }
+
+        document.addEventListener("DOMContentLoaded", initCookieBanner);
+      })();
+
+      // Hamburger toggle
+      const burger = document.getElementById("burger");
+      const sideMenu = document.getElementById("sideMenu");
+      burger.addEventListener("click", () => {
+        burger.classList.toggle("active");
+        sideMenu.classList.toggle("active");
+      });
+    </script>
   </body>
 </html>
