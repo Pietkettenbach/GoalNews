@@ -31,6 +31,63 @@
     <meta name="theme-color" content="#1db954" />
     <link rel="apple-touch-icon" href="https://i.ibb.co/21R6p75W/Logo-1.jpg" />
     <link rel="manifest" href="manifest.json" />
+
+    <style>
+      /* ===== Super Bowl Countdown ===== */
+      .sb-countdown {
+        max-width: 900px;
+        margin: 60px auto;
+        padding: 30px 20px;
+        background: linear-gradient(145deg, var(--bg-card), #0b0b0b);
+        border-radius: var(--radius-lg);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+      }
+
+      .sb-label {
+        display: block;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--green-main);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .sb-timer {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+      }
+
+      .sb-box {
+        background: #0f0f0f;
+        border-radius: var(--radius-md);
+        padding: 18px 10px;
+        box-shadow: inset 0 0 0 1px #1c1c1c;
+      }
+
+      .sb-box span {
+        display: block;
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: #fff;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .sb-box small {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--green-soft);
+      }
+
+      /* Mobile */
+      @media (max-width: 600px) {
+        .sb-timer {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
   </head>
 
   <body>
@@ -48,6 +105,7 @@
       <!-- Side Menu -->
       <nav id="sideMenu" class="side-menu">
         <ul>
+          <li><a href="highlights.html">Bundesliga Highlights</a></li>
           <li><a href="ueber_uns.html">About Us</a></li>
           <li><a href="experten-tipp.html">Experten-Tipp</a></li>
           <li><a href="live-football.html">Football Liveticker</a></li>
@@ -63,7 +121,6 @@
               >WhatsApp</a
             >
           </li>
-          <li><a href="https://www.youtube.com/@Goalnewsde">YouTube</a></li>
         </ul>
       </nav>
     </header>
@@ -92,6 +149,29 @@
         </span>
       </div>
     </div>
+
+    <section class="sb-countdown">
+      <span class="sb-label">🏈 Super Bowl Countdown</span>
+
+      <div class="sb-timer">
+        <div class="sb-box">
+          <span id="sb-days">0</span>
+          <small>Tage</small>
+        </div>
+        <div class="sb-box">
+          <span id="sb-hours">0</span>
+          <small>Std</small>
+        </div>
+        <div class="sb-box">
+          <span id="sb-minutes">0</span>
+          <small>Min</small>
+        </div>
+        <div class="sb-box">
+          <span id="sb-seconds">0</span>
+          <small>Sek</small>
+        </div>
+      </div>
+    </section>
 
     <!-- Countdown -->
     <h2>⏱️ 21. Spieltag startet in:</h2>
@@ -161,38 +241,49 @@
 
     <!-- Scripts -->
 
-    <!-- Countdown Script -->
     <script>
       (function () {
-        const countdownEl = document.getElementById("countdown");
-        const targetDate = new Date("2026-02-08T20:30:00");
-        function updateCountdown() {
+        // Super Bowl 2026
+        // Super Bowl LX – 8. Februar 2026, 00:30 MEZ
+        const superBowlDate = new Date("2026-02-08T00:30:00+01:00");
+
+        const dEl = document.getElementById("sb-days");
+        const hEl = document.getElementById("sb-hours");
+        const mEl = document.getElementById("sb-minutes");
+        const sEl = document.getElementById("sb-seconds");
+
+        function updateSBCountdown() {
           const now = new Date();
-          let diff = targetDate - now;
+          let diff = superBowlDate - now;
+
           if (diff <= 0) {
-            countdownEl.textContent = "läuft!";
+            dEl.textContent = "0";
+            hEl.textContent = "0";
+            mEl.textContent = "0";
+            sEl.textContent = "0";
             return;
           }
+
           const days = Math.floor(diff / 86400000);
           diff %= 86400000;
           const hours = Math.floor(diff / 3600000);
           diff %= 3600000;
           const minutes = Math.floor(diff / 60000);
           const seconds = Math.floor((diff % 60000) / 1000);
-          const parts = [];
-          if (days) parts.push(days + "d");
-          if (hours) parts.push(hours + "h");
-          if (minutes) parts.push(minutes + "m");
-          parts.push(seconds + "s");
-          countdownEl.textContent = parts.join(" ");
+
+          dEl.textContent = days;
+          hEl.textContent = hours.toString().padStart(2, "0");
+          mEl.textContent = minutes.toString().padStart(2, "0");
+          sEl.textContent = seconds.toString().padStart(2, "0");
         }
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+
+        updateSBCountdown();
+        setInterval(updateSBCountdown, 1000);
       })();
     </script>
 
-    <!-- Firebase & Live Games Script -->
     <script type="module">
+      // ===== Firebase & Live Games Setup =====
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
       import {
         getFirestore,
@@ -221,7 +312,7 @@
       const auth = getAuth(app);
       setPersistence(auth, browserLocalPersistence);
 
-      // Maintenance redirect
+      // ===== Maintenance Redirect =====
       function watchMaintenance() {
         const docRef = doc(db, "settings", "main");
         onSnapshot(docRef, (snap) => {
@@ -233,7 +324,7 @@
       }
       watchMaintenance();
 
-      // Breaking news toggle
+      // ===== Breaking News Toggle =====
       const breakingEl = document.getElementById("breakingNews");
       onAuthStateChanged(auth, (user) => {
         if (!user) {
@@ -247,7 +338,7 @@
         });
       });
 
-      // Live games rendering
+      // ===== Live Games Rendering =====
       const tableBody = document.getElementById("tableBody");
       const matchTimers = new Map();
 
@@ -259,10 +350,12 @@
           td.appendChild(overlay);
         }
       }
+
       function removeHalfTimeAnimation(td) {
         const overlay = td.querySelector(".half-time-animation");
         if (overlay) overlay.remove();
       }
+
       function formatTime(ms) {
         const s = Math.floor(ms / 1000);
         return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
@@ -313,9 +406,9 @@
             if (docSnap.id === "next_game") return;
             const tr = document.createElement("tr");
             tr.innerHTML = `
-              <td class="${data.over ? "over-game" : ""}">${data.home || ""}</td>
-              <td class="${data.over ? "over-game" : ""}">${data.away || ""}</td>
-              <td class="${data.goal ? "goal-animation" : ""} ${data.over ? "over-game" : ""}">${data.score || ""}</td>`;
+          <td class="${data.over ? "over-game" : ""}">${data.home || ""}</td>
+          <td class="${data.over ? "over-game" : ""}">${data.away || ""}</td>
+          <td class="${data.goal ? "goal-animation" : ""} ${data.over ? "over-game" : ""}">${data.score || ""}</td>`;
             tableBody.appendChild(tr);
             const td = tr.querySelector("td:nth-child(3)");
             if (data.halfTime) addHalfTimeAnimation(td);
@@ -334,13 +427,44 @@
       initLiveGames();
     </script>
 
-    <!-- Promo Banner Script -->
     <script>
+      // ===== Countdown =====
+      (function () {
+        const countdownEl = document.getElementById("countdown");
+        const targetDate = new Date("2026-02-08T20:30:00");
+
+        function updateCountdown() {
+          const now = new Date();
+          let diff = targetDate - now;
+          if (diff <= 0) {
+            countdownEl.textContent = "läuft!";
+            return;
+          }
+          const days = Math.floor(diff / 86400000);
+          diff %= 86400000;
+          const hours = Math.floor(diff / 3600000);
+          diff %= 3600000;
+          const minutes = Math.floor(diff / 60000);
+          const seconds = Math.floor((diff % 60000) / 1000);
+          const parts = [];
+          if (days) parts.push(days + "d");
+          if (hours) parts.push(hours + "h");
+          if (minutes) parts.push(minutes + "m");
+          parts.push(seconds + "s");
+          countdownEl.textContent = parts.join(" ");
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      })();
+
+      // ===== Promo Banner =====
       (function () {
         const banner = document.getElementById("promoBanner");
         if (!banner) return;
         const closeBtn = banner.querySelector(".promo-close");
         const storageKey = "promoBannerClosed_v1";
+
         function hideBanner(save) {
           try {
             banner.style.display = "none";
@@ -349,10 +473,12 @@
             banner.style.display = "none";
           }
         }
+
         try {
           if (localStorage.getItem(storageKey) === "1")
             banner.style.display = "none";
         } catch (e) {}
+
         if (closeBtn) {
           closeBtn.addEventListener("click", () => hideBanner(true));
           closeBtn.addEventListener("keydown", (e) => {
@@ -363,29 +489,26 @@
           });
         }
       })();
-    </script>
 
-    <!-- Cookie Consent Script -->
-    <script>
+      // ===== Cookie Consent + Google Tag Manager & GA4 =====
       (function () {
         const COOKIE_KEY = "cookieConsent_v1";
+        const GTM_ID = "GTM-XXXXXXX"; // hier deine GTM-ID eintragen
 
-        function loadGoogleAnalytics() {
-          if (window.gtagLoaded) return;
-          window.gtagLoaded = true;
-          const script = document.createElement("script");
-          script.async = true;
-          script.src =
-            "https://www.googletagmanager.com/gtag/js?id=G-C1HQFFK8NB";
-          document.head.appendChild(script);
-          script.onload = () => {
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-            gtag("config", "G-C1HQFFK8NB", { anonymize_ip: true });
-          };
+        function loadGTM() {
+          if (window.gtmLoaded) return;
+          window.gtmLoaded = true;
+
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            "gtm.start": new Date().getTime(),
+            event: "gtm.js",
+          });
+
+          const gtmScript = document.createElement("script");
+          gtmScript.async = true;
+          gtmScript.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`;
+          document.head.appendChild(gtmScript);
         }
 
         function initCookieBanner() {
@@ -396,12 +519,12 @@
 
           const consent = localStorage.getItem(COOKIE_KEY);
           if (!consent) banner.style.display = "block";
-          else if (consent === "accepted") loadGoogleAnalytics();
+          else if (consent === "accepted") loadGTM();
 
           acceptBtn.addEventListener("click", () => {
             localStorage.setItem(COOKIE_KEY, "accepted");
             banner.style.display = "none";
-            loadGoogleAnalytics();
+            loadGTM();
           });
           declineBtn.addEventListener("click", () => {
             localStorage.setItem(COOKIE_KEY, "declined");
@@ -412,7 +535,7 @@
         document.addEventListener("DOMContentLoaded", initCookieBanner);
       })();
 
-      // Hamburger toggle
+      // ===== Hamburger Toggle =====
       const burger = document.getElementById("burger");
       const sideMenu = document.getElementById("sideMenu");
       burger.addEventListener("click", () => {
