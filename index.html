@@ -129,23 +129,19 @@
     <div id="breakingNews" class="locked">
       <div class="news-wrapper">
         <span class="news-item">
-          🔴 Arsenal kämpft sich ins Carabao-Cup-Halbfinale durch Penalty-Drama
-          gegen Crystal Palace
+          Der Superbowl LX startet in wenigen Tagen - Seattle Seahawks @ New
+          England Patriots - Wer holt sich die Krone?
         </span>
         <span class="news-item">
-          🏴 Man City verpflichtet Bournemouth-Stürmer Antoine Semenyo im
-          Winter-Transferfenster
+          Dortmund verkürzt den abstand auf die Bayern! 2:1 Sieg gegen die
+          Wölfe!
         </span>
         <span class="news-item">
-          👑 Real-Madrid-Talent Endrick wechselt für den Rest der Saison auf
-          Leihbasis zu Olympique Lyon
+          Dzeko macht den Doppelpack gegen Kaiserslautern und sichert ein 2:2
+          unentschieden!
         </span>
         <span class="news-item">
-          🇸🇳 Senegal startet mit einem 3:0-Sieg gegen Botswana in den Afrika-Cup
-        </span>
-        <span class="news-item">
-          💸 Martha Stewart wird Miteigentümerin von Swansea City – gemeinsam
-          mit Snoop Dogg und Luka Modrić
+          Bad Bunny äussert sich nicht gegen Trump!
         </span>
       </div>
     </div>
@@ -340,136 +336,133 @@
 
       // ===== Live Games Rendering =====
       const tableBody = document.getElementById("tableBody");
-const matchTimers = new Map();
+      const matchTimers = new Map();
 
-// Map für bestehende Tabellenzeilen
-const matchRows = new Map();
+      // Map für bestehende Tabellenzeilen
+      const matchRows = new Map();
 
-async function loadBundesligaMatches() {
-  try {
-    const res = await fetch("https://api.openligadb.de/getmatchdata/bl1");
-    const matches = await res.json();
+      async function loadBundesligaMatches() {
+        try {
+          const res = await fetch("https://api.openligadb.de/getmatchdata/bl1");
+          const matches = await res.json();
 
-    if (!matches.length) {
-      tableBody.innerHTML =
-        "<tr><td colspan='3'>Keine Spiele gefunden</td></tr>";
-      return;
-    }
+          if (!matches.length) {
+            tableBody.innerHTML =
+              "<tr><td colspan='3'>Keine Spiele gefunden</td></tr>";
+            return;
+          }
 
-    matches.forEach(updateOrCreateRow);
-  } catch (err) {
-    console.error(err);
-    tableBody.innerHTML =
-      "<tr><td colspan='3'>Fehler beim Laden der Daten</td></tr>";
-  }
-}
+          matches.forEach(updateOrCreateRow);
+        } catch (err) {
+          console.error(err);
+          tableBody.innerHTML =
+            "<tr><td colspan='3'>Fehler beim Laden der Daten</td></tr>";
+        }
+      }
 
-function updateOrCreateRow(match) {
-  const id = match.matchID;
+      function updateOrCreateRow(match) {
+        const id = match.matchID;
 
-  const home = match.team1.teamName;
-  const away = match.team2.teamName;
+        const home = match.team1.teamName;
+        const away = match.team2.teamName;
 
-  const goals = match.goals || [];
-  const lastGoal = goals[goals.length - 1] || {};
-  const score = goals.length
-    ? `${lastGoal.scoreTeam1} : ${lastGoal.scoreTeam2}`
-    : "- : -";
+        const goals = match.goals || [];
+        const lastGoal = goals[goals.length - 1] || {};
+        const score = goals.length
+          ? `${lastGoal.scoreTeam1} : ${lastGoal.scoreTeam2}`
+          : "- : -";
 
-  // --- Status korrekt bestimmen ---
-  let status = "Noch nicht gestartet";
-  let minute = "";
+        // --- Status korrekt bestimmen ---
+        let status = "Noch nicht gestartet";
+        let minute = "";
 
-  const start = new Date(match.matchDateTime);
-  const now = new Date();
+        const start = new Date(match.matchDateTime);
+        const now = new Date();
 
-  const results = match.matchResults || [];
-  const finalResult = results.find(r => r.resultTypeID === 2);
+        const results = match.matchResults || [];
+        const finalResult = results.find((r) => r.resultTypeID === 2);
 
-  // --- 1) Spiel beendet (sicher) ---
-  if (finalResult) {
-    status = "Beendet";
-  }
+        // --- 1) Spiel beendet (sicher) ---
+        if (finalResult) {
+          status = "Beendet";
+        }
 
-  // --- 2) Live (Startzeit vorbei, aber kein Endstand) ---
-  else if (now > start) {
-    status = "Live";
+        // --- 2) Live (Startzeit vorbei, aber kein Endstand) ---
+        else if (now > start) {
+          status = "Live";
 
-    if (match.matchMinute) {
-      minute = `${match.matchMinute}'`;
-    } else {
-      const diff = Math.floor((now - start) / 60000);
-      minute = diff < 90 ? `${diff}'` : "90+";
-    }
-  }
+          if (match.matchMinute) {
+            minute = `${match.matchMinute}'`;
+          } else {
+            const diff = Math.floor((now - start) / 60000);
+            minute = diff < 90 ? `${diff}'` : "90+";
+          }
+        }
 
-  // --- 3) Notfall: Keine Daten verfügbar ---
-  const endTime = new Date(start.getTime() + 120 * 60000); // 2h nach Start
+        // --- 3) Notfall: Keine Daten verfügbar ---
+        const endTime = new Date(start.getTime() + 120 * 60000); // 2h nach Start
 
-  if (
-    now > endTime &&          // Spiel müsste vorbei sein
-    goals.length === 0 &&     // keine Tore
-    !finalResult              // kein Endstand
-  ) {
-    status = "Keine Daten verfügbar";
-    minute = "";
-  }
+        if (
+          now > endTime && // Spiel müsste vorbei sein
+          goals.length === 0 && // keine Tore
+          !finalResult // kein Endstand
+        ) {
+          status = "Keine Daten verfügbar";
+          minute = "";
+        }
 
-  let row = matchRows.get(id);
+        let row = matchRows.get(id);
 
-  // Falls die Reihe noch nicht existiert → erstellen
-  if (!row) {
-    row = document.createElement("tr");
-    row.innerHTML = `
+        // Falls die Reihe noch nicht existiert → erstellen
+        if (!row) {
+          row = document.createElement("tr");
+          row.innerHTML = `
       <td class="home"></td>
       <td class="away"></td>
       <td class="info"></td>
     `;
-    tableBody.appendChild(row);
-    matchRows.set(id, row);
-  }
+          tableBody.appendChild(row);
+          matchRows.set(id, row);
+        }
 
-  // Inhalte aktualisieren (ohne Flackern)
-  row.querySelector(".home").innerHTML = `
+        // Inhalte aktualisieren (ohne Flackern)
+        row.querySelector(".home").innerHTML = `
     <strong>${home}</strong><br>
     <small>${match.location?.locationCity || ""}</small>
   `;
 
-  row.querySelector(".away").innerHTML = `
+        row.querySelector(".away").innerHTML = `
     <strong>${away}</strong><br>
     <small>${match.location?.locationStadium || ""}</small>
   `;
 
-  row.querySelector(".info").innerHTML = `
+        row.querySelector(".info").innerHTML = `
     <div><strong>${score}</strong> ${minute}</div>
     <div><small>${status}</small></div>
     <div class="events">${renderEvents(goals)}</div>
   `;
-}
+      }
 
-function renderEvents(goals) {
-  if (!goals.length) return "";
+      function renderEvents(goals) {
+        if (!goals.length) return "";
 
-  return goals
-    .map(
-      (g) => `
+        return goals
+          .map(
+            (g) => `
       <div class="event">
         ${g.matchMinute}' – 
         <strong>${g.goalGetterName}</strong>
         (${g.scoreTeam1}:${g.scoreTeam2})
       </div>
-    `
-    )
-    .join("");
-}
+    `,
+          )
+          .join("");
+      }
 
-// Alle 10 Sekunden aktualisieren
-loadBundesligaMatches();
-setInterval(loadBundesligaMatches, 10000);
-
-</script>
-
-
+      // Alle 10 Sekunden aktualisieren
+      loadBundesligaMatches();
+      setInterval(loadBundesligaMatches, 10000);
+    </script>
 
     <script>
       // ===== Countdown =====
@@ -502,43 +495,10 @@ setInterval(loadBundesligaMatches, 10000);
         setInterval(updateCountdown, 1000);
       })();
 
-      // ===== Promo Banner =====
-      (function () {
-        const banner = document.getElementById("promoBanner");
-        if (!banner) return;
-        const closeBtn = banner.querySelector(".promo-close");
-        const storageKey = "promoBannerClosed_v1";
-
-        function hideBanner(save) {
-          try {
-            banner.style.display = "none";
-            if (save) localStorage.setItem(storageKey, "1");
-          } catch (e) {
-            banner.style.display = "none";
-          }
-        }
-
-        try {
-          if (localStorage.getItem(storageKey) === "1")
-            banner.style.display = "none";
-        } catch (e) {}
-
-        if (closeBtn) {
-          closeBtn.addEventListener("click", () => hideBanner(true));
-          closeBtn.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              hideBanner(true);
-            }
-          });
-        }
-      })();
-
       // ===== Cookie Consent + Google Tag Manager & GA4 =====
       (function () {
         const COOKIE_KEY = "cookieConsent_v1";
-        const GTM_ID = "GTM-XXXXXXX"; // hier deine GTM-ID eintragen
-
+        const GTM_ID = "GTM-XXXXXXX";
         function loadGTM() {
           if (window.gtmLoaded) return;
           window.gtmLoaded = true;
