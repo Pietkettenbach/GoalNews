@@ -63,63 +63,6 @@
       gtag("js", new Date());
       gtag("config", "G-C1HQFFK8NB", { anonymize_ip: true });
     </script>
-
-    <style>
-      /* ===== Super Bowl Countdown ===== */
-      .sb-countdown {
-        max-width: 900px;
-        margin: 60px auto;
-        padding: 30px 20px;
-        background: linear-gradient(145deg, var(--bg-card), #0b0b0b);
-        border-radius: var(--radius-lg);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-      }
-
-      .sb-label {
-        display: block;
-        margin-bottom: 20px;
-        font-size: 1.4rem;
-        font-weight: 700;
-        color: var(--green-main);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .sb-timer {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 15px;
-      }
-
-      .sb-box {
-        background: #0f0f0f;
-        border-radius: var(--radius-md);
-        padding: 18px 10px;
-        box-shadow: inset 0 0 0 1px #1c1c1c;
-      }
-
-      .sb-box span {
-        display: block;
-        font-size: 2.4rem;
-        font-weight: 800;
-        color: #fff;
-        font-variant-numeric: tabular-nums;
-      }
-
-      .sb-box small {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: var(--green-soft);
-      }
-
-      /* Mobile */
-      @media (max-width: 600px) {
-        .sb-timer {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-    </style>
   </head>
 
   <body>
@@ -161,72 +104,48 @@
     <div id="breakingNews" class="locked">
       <div class="news-wrapper">
         <span class="news-item">
-          Der Superbowl LX startet in wenigen Tagen - Seattle Seahawks @ New
-          England Patriots - Wer holt sich die Krone?
+          Die Seattle Seahawks holen sich den 2. Superbowl in ihrer
+          Verinsgeschichte und gewinnen mit 29:13 gegen die New England
+          Patriots!
         </span>
         <span class="news-item">
-          Dortmund verkürzt den abstand auf die Bayern! 2:1 Sieg gegen die
-          Wölfe!
+          Der BVB mit klarer Machtdemonstration gegen Mainz 05 (4:0)!
         </span>
         <span class="news-item">
-          Dzeko macht den Doppelpack gegen Kaiserslautern und sichert ein 2:2
-          unentschieden!
+          Gemischte meinungen zu Bad Bunny Halftimeshow beim Super Bowl!
         </span>
-        <span class="news-item">
-          Bad Bunny äussert sich nicht gegen Trump!
-        </span>
+        <span class="news-item"
+          >Können die Bayern ihre Führung gegen Bremen ausbauen?</span
+        >
       </div>
     </div>
 
-    <section class="sb-countdown">
-      <span class="sb-label">🏈 Super Bowl Countdown</span>
-
-      <div class="sb-timer">
-        <div class="sb-box">
-          <span id="sb-days">0</span>
-          <small>Tage</small>
-        </div>
-        <div class="sb-box">
-          <span id="sb-hours">0</span>
-          <small>Std</small>
-        </div>
-        <div class="sb-box">
-          <span id="sb-minutes">0</span>
-          <small>Min</small>
-        </div>
-        <div class="sb-box">
-          <span id="sb-seconds">0</span>
-          <small>Sek</small>
-        </div>
-      </div>
-    </section>
-
     <!-- Countdown -->
-    <h2>⏱️ 21. Spieltag startet in:</h2>
+    <h2>⏱️ 23. Spieltag startet in:</h2>
     <div id="countdown">lade...</div>
 
     <!-- Bundesliga Spieltag -->
     <div class="matches" style="text-align: center; margin-top: 40px">
-      <h2>🏆 Bundesliga-Spieltag 21</h2>
-      <h3>21. Spieltag (6.2.2026 - 8.2.2026)</h3>
+      <h2>🏆 Bundesliga-Spieltag 23</h2>
+      <h3>23. Spieltag (20.2.2026 - 22.2.2026)</h3>
       <div>
-        <h4>Freitag, 6.2.2026:</h4>
-        <p>Union Berlin 20:30 Eintracht Frankfurt</p>
-        <h4>Samstag, 7.2.2026:</h4>
+        <h4>Freitag, 20.2.2026:</h4>
+        <p>FSV Mainz 05 20:30 Hamburger SV</p>
+        <h4>Samstag, 21.2.2026:</h4>
         <p>
-          SC Freiburg 15:30 Werder Bremen<br />
-          FSV Mainz 05 15:30 FC Augsburg<br />
-          VfL Wolfsburg 15:30 Bor. Dortmund<br />
-          FC St. Pauli 15:30 VfB Stuttgart<br />
-          FC Heidenheim 15:30 Hamburger SV<br />
+          FC Bayern München 15:30 Eintracht Frankfurt<br />
+          VfL Wolfsburg 15:30 FC Augsburg<br />
+          FC Union Berlin 15:30 Bayer 04 Leverkusen<br />
+          FC Köln 15:30 TSG 1899 Hoffenheim<br />
           <strong class="topspiel"
-            >Topspiel: Bor. M'gladbach 18:30 Bayer Leverkusen</strong
+            >Topspiel: RB Leipzig 18:30 Borussia Dortmund</strong
           >
         </p>
-        <h4>Sonntag, 8.2.2026:</h4>
+        <h4>Sonntag, 22.2.2026:</h4>
         <p>
-          1. FC Köln 15:30 RB Leipzig<br />
-          Bayern München 17:30 TSG Hoffenheim<br />
+          SC Freiburg 15:30 Bor. M'gladbach<br />
+          FC St. Pauli 17:30 SV Werder Bremen<br />
+          FC Heidenheim 19:30 VfB Stuttgart
         </p>
       </div>
     </div>
@@ -268,48 +187,6 @@
     </footer>
 
     <!-- Scripts -->
-
-    <script>
-      (function () {
-        // Super Bowl 2026
-        // Super Bowl LX – 8. Februar 2026, 00:30 MEZ
-        const superBowlDate = new Date("2026-02-09T00:30:00+01:00");
-
-        const dEl = document.getElementById("sb-days");
-        const hEl = document.getElementById("sb-hours");
-        const mEl = document.getElementById("sb-minutes");
-        const sEl = document.getElementById("sb-seconds");
-
-        function updateSBCountdown() {
-          const now = new Date();
-          let diff = superBowlDate - now;
-
-          if (diff <= 0) {
-            dEl.textContent = "0";
-            hEl.textContent = "0";
-            mEl.textContent = "0";
-            sEl.textContent = "0";
-            return;
-          }
-
-          const days = Math.floor(diff / 86400000);
-          diff %= 86400000;
-          const hours = Math.floor(diff / 3600000);
-          diff %= 3600000;
-          const minutes = Math.floor(diff / 60000);
-          const seconds = Math.floor((diff % 60000) / 1000);
-
-          dEl.textContent = days;
-          hEl.textContent = hours.toString().padStart(2, "0");
-          mEl.textContent = minutes.toString().padStart(2, "0");
-          sEl.textContent = seconds.toString().padStart(2, "0");
-        }
-
-        updateSBCountdown();
-        setInterval(updateSBCountdown, 1000);
-      })();
-    </script>
-
     <script type="module">
       // ===== Firebase & Live Games Setup =====
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
